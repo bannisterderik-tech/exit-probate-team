@@ -96,17 +96,26 @@
     });
   })();
 
-  /* ---------- Stat counter: count up on first view ---------- */
+  /* ---------- Stat counter: count up on first view ----------
+     Captures the markup template (with <em> suffix nodes preserved) at
+     start and rewrites just the leading number node on each tick. The
+     em-suffix elements stay rendered the entire time. */
   (function () {
     var stats = document.querySelectorAll(".stat-strip .stat .n");
     if (!stats.length || !window.ScrollTrigger) return;
     stats.forEach(function (el) {
-      var raw = el.textContent.trim();
+      // The number is the first text node — find it and the original target value.
+      var firstText = null;
+      for (var i = 0; i < el.childNodes.length; i++) {
+        if (el.childNodes[i].nodeType === 3) { firstText = el.childNodes[i]; break; }
+      }
+      if (!firstText) return;
+      var raw = firstText.nodeValue.trim();
       var match = raw.match(/^([0-9]+)/);
       if (!match) return;
       var target = parseInt(match[1], 10);
       if (!isFinite(target) || target === 0) return;
-      var suffix = raw.slice(match[1].length);
+      var leading = raw.slice(match[1].length); // e.g. "/36" — preserve as part of leading text
       var started = false;
       ScrollTrigger.create({
         trigger: el,
@@ -115,14 +124,16 @@
         onEnter: function () {
           if (started) return; started = true;
           var obj = { v: 0 };
+          firstText.nodeValue = "0" + leading;
           gsap.to(obj, {
             v: target,
             duration: 1.6,
             ease: "expo.out",
             onUpdate: function () {
-              el.firstChild && (el.firstChild.nodeType === 3)
-                ? (el.firstChild.nodeValue = Math.round(obj.v).toString())
-                : null;
+              firstText.nodeValue = Math.round(obj.v) + leading;
+            },
+            onComplete: function () {
+              firstText.nodeValue = target + leading;
             },
           });
         },

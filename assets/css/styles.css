@@ -1105,16 +1105,17 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
 .county-masthead .list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0;
+  column-gap: clamp(32px, 5vw, 80px);
+  row-gap: 0;
   font-family: var(--display);
 }
 .county-masthead .list a {
-  padding: 10px 0;
+  padding: 14px 0;
   border-top: 1px solid var(--rule-soft);
   font-size: clamp(15px, 1.3vw, 17px);
   font-variation-settings: "opsz" 18;
   color: var(--ink);
-  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
   transition: color 240ms;
 }
 .county-masthead .list a:hover { color: var(--sage-deep); }

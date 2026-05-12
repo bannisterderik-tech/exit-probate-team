@@ -70,22 +70,27 @@ const IMG = {
   warmRoom:     U("1572025442646-866d16c84a54"),
   emptyDoorway: U("1505691938895-1758d7feb511"),
 
-  /* New editorial home page imagery — curated, no stock cliches */
-  heroHouse:      U("1564013799919-ab600027ffc6", 1800),   // craftsman porch front
-  heroHouseAlt:   U("1583608205776-bfd35f0d9f83", 1800),   // alt warm home exterior
-  serviceCash:    U("1554224155-6726b3ff858f", 1400),       // desk with papers — cash sale
-  serviceListing: U("1564013799919-ab600027ffc6", 1400),    // home exterior — listing
-  serviceWatch:   U("1505691938895-1758d7feb511", 1400),    // empty hallway — vacant
-  serviceAdvisor: U("1495774856032-8b90bbb32b32", 1400),    // hands with tea — advisory
-  stepConversation: U("1495774856032-8b90bbb32b32", 1200),  // tea hands
-  stepSummary:    U("1450101499163-c8848c66ca85", 1200),    // papers/desk
-  stepPrepare:    U("1505691938895-1758d7feb511", 1200),    // empty room
-  stepPaths:      U("1568605114967-8130f3a36994", 1200),    // craftsman home
-  stepUpdates:    U("1521791136064-7986c2920216", 1200),    // hands writing
-  stepClose:      U("1481627834876-b7833e8f5570", 1200),    // open book / closure
-  oregonRoad:     U("1500382017468-9049fed747ef", 1600),    // rural Oregon road
-  resourceTimeline: U("1450101499163-c8848c66ca85", 1200),
-  resourceSelling:  U("1564013799919-ab600027ffc6", 1200),
+  /* New editorial home page imagery — verified Pacific Northwest / Oregon
+     photography. Hero is a Portland, OR craftsman with cedar/PNW foliage;
+     coverage is Haystack Rock at Cannon Beach (definitive Oregon coast);
+     service tiles use restrained interiors and document close-ups —
+     no Mediterranean / Florida / tropical / desert imagery. */
+  heroHouse:        U("1590291127093-24b2232c51ec", 1800), // Portland, OR craftsman — green/white with PNW foliage
+  heroHouseAlt:     U("1583608205776-bfd35f0d9f83", 1800),
+  serviceCash:      U("1521791055366-0d553872125f", 1400), // hand writing on paper — signing, document close-up
+  serviceListing:   U("1590291127093-24b2232c51ec", 1400), // PNW home exterior
+  serviceWatch:     U("1505691938895-1758d7feb511", 1400), // empty hallway with warm light — vacant
+  serviceAdvisor:   U("1495774856032-8b90bbb32b32", 1400), // hands with tea — advisory
+  stepConversation: U("1495774856032-8b90bbb32b32", 1200),
+  stepSummary:      U("1521791055366-0d553872125f", 1200), // hand writing — written summary
+  stepPrepare:      U("1505691938895-1758d7feb511", 1200), // empty room with light
+  stepPaths:        U("1590291127093-24b2232c51ec", 1200), // PNW home
+  stepUpdates:      U("1521791136064-7986c2920216", 1200), // hands writing
+  stepClose:        U("1481627834876-b7833e8f5570", 1200), // open book — file closed
+  oregonLandscape:  U("1716244044193-1cb4daa4f487", 1800), // Haystack Rock, Cannon Beach OR — definitive Oregon
+  oregonForest:     U("1585508889431-a1d0d9c5a324", 1600), // Misty Oregon fir forest
+  resourceTimeline: U("1521791055366-0d553872125f", 1200),
+  resourceSelling:  U("1590291127093-24b2232c51ec", 1200),
   resourceExecutor: U("1481627834876-b7833e8f5570", 1200),
 };
 
@@ -130,7 +135,7 @@ function _bentoTile(s, i, withPhoto, span) {
     "market-listing":        IMG.serviceListing,
     "estate-cleanout":       IMG.bookshelf,
     "vacant-property-watch": IMG.serviceWatch,
-    "heir-locator":          IMG.oregonRoad,
+    "heir-locator":          IMG.oregonForest,
     "advisory":              IMG.serviceAdvisor,
   };
   const ph = photoMap[s.slug];
@@ -265,19 +270,19 @@ const HOME_BODY = `
           num: "i.",
           title: "For Personal Representatives & Executors",
           body: "You were named in the will. Now you're holding a court appointment, an empty house, and a checklist that grows every day. We carry the real estate piece end-to-end and route the rest to vetted attorneys, estate-sale operators, and contractors — so your job becomes one weekly digest.",
-          href: "pages/audiences/executors.html",
+          href: "pages/resources/executor-checklist.html",
         })}
         ${_audienceCard({
           num: "ii.",
           title: "For Trustees & Successor Trustees",
           body: "Trust real estate moves differently than probate — no court confirmation, more discretion, more exposure. We document everything for the trust accounting, coordinate with the trust attorney, and price the property against the duty of impartiality you owe every beneficiary.",
-          href: "pages/audiences/trustees.html",
+          href: "pages/resources/avoiding-probate.html",
         })}
         ${_audienceCard({
           num: "iii.",
           title: "For Probate Attorneys",
           body: "Most of our calls come from attorneys who'd rather practice law than hunt for a real-estate specialist who won't get the court order wrong. We carry the real estate, you carry the file. We coordinate on contract terms, timing the hearings, and the final accounting line items.",
-          href: "pages/audiences/attorneys.html",
+          href: "pages/resources/working-with-attorneys.html",
         })}
       </div>
     </div>
@@ -387,7 +392,7 @@ const HOME_BODY = `
             We are anchored in Eugene and work statewide. Each county gets its own page — the court address, the typical timeline, the local probate attorneys we trust.
           </p>
           <div class="photo reveal-img">
-            <img src="${IMG.oregonRoad}" alt="A quiet Oregon road through the Willamette Valley" />
+            <img src="${IMG.oregonLandscape}" alt="Haystack Rock at Cannon Beach — the Oregon coast our practice covers" />
           </div>
         </div>
         <div class="list reveal">
