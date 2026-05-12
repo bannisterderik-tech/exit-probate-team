@@ -19,86 +19,113 @@
 
   if (window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
-  /* ---------- Identify hero scope ---------- */
+  /* ---------- Identify hero / page-hero scopes ---------- */
   var heroScope = document.querySelector(".hero, [data-hero]");
-  function isInsideHero(el) {
-    return heroScope && heroScope.contains(el);
+  var pageHero = document.querySelector(".page-hero");
+
+  function isHeroElement(el) {
+    return (heroScope && heroScope.contains(el)) ||
+           (pageHero && pageHero.contains(el));
   }
 
-  /* ---------- Initial: hide reveal targets ---------- */
-  gsap.set(".line-mask > span", { yPercent: 110 });
-
+  /* ---------- Initial states for NON-hero scroll reveals ---------- */
   document.querySelectorAll(".reveal").forEach(function (el) {
-    if (!isInsideHero(el)) gsap.set(el, { y: 40, opacity: 0 });
+    if (!isHeroElement(el)) gsap.set(el, { y: 40, opacity: 0 });
   });
   document.querySelectorAll(".reveal-fade").forEach(function (el) {
-    if (!isInsideHero(el)) gsap.set(el, { opacity: 0 });
+    if (!isHeroElement(el)) gsap.set(el, { opacity: 0 });
   });
   document.querySelectorAll(".reveal-img").forEach(function (el) {
-    if (!isInsideHero(el)) gsap.set(el, { scale: 1.12, opacity: 0 });
+    if (!isHeroElement(el)) gsap.set(el, { scale: 1.12, opacity: 0 });
   });
 
-  /* ---------- Hero entrance sequence ---------- */
-  var heroLines = document.querySelectorAll(".hero .line-mask > span, [data-hero] .line-mask > span");
-  if (heroLines.length) {
-    gsap.to(heroLines, {
-      yPercent: 0,
-      duration: 1.2,
-      ease: "expo.out",
-      stagger: 0.08,
-      delay: 0.15,
-    });
-  }
-
+  /* ---------- Hero entrance (home page) ---------- */
   if (heroScope) {
+    var tl = gsap.timeline({ delay: 0.1 });
+
+    var heroLineSpans = heroScope.querySelectorAll(".line-mask > span");
+    if (heroLineSpans.length) {
+      gsap.set(heroLineSpans, { yPercent: 110 });
+      tl.to(heroLineSpans, {
+        yPercent: 0,
+        duration: 1.2,
+        ease: "expo.out",
+        stagger: 0.08,
+      }, 0);
+    }
+
     var heroReveals = heroScope.querySelectorAll(".reveal");
-    gsap.fromTo(heroReveals, { y: 24, opacity: 0 }, {
-      y: 0, opacity: 1, duration: 1.1, ease: "expo.out", stagger: 0.06, delay: 0.3
-    });
+    if (heroReveals.length) {
+      gsap.set(heroReveals, { y: 24, opacity: 0 });
+      tl.to(heroReveals, {
+        y: 0, opacity: 1, duration: 1.1, ease: "expo.out", stagger: 0.06,
+      }, 0.2);
+    }
 
     var heroImgs = heroScope.querySelectorAll(".reveal-img");
-    gsap.fromTo(heroImgs, { scale: 1.06, opacity: 0 }, {
-      scale: 1, opacity: 1, duration: 1.6, ease: "expo.out", delay: 0.2
-    });
+    if (heroImgs.length) {
+      gsap.set(heroImgs, { scale: 1.06, opacity: 0 });
+      tl.to(heroImgs, {
+        scale: 1, opacity: 1, duration: 1.6, ease: "expo.out",
+      }, 0.15);
+    }
 
     var heroFades = heroScope.querySelectorAll(".reveal-fade");
-    gsap.fromTo(heroFades, { opacity: 0 }, {
-      opacity: 1, duration: 1.2, ease: "power2.out", delay: 0.4
-    });
+    if (heroFades.length) {
+      gsap.set(heroFades, { opacity: 0 });
+      tl.to(heroFades, {
+        opacity: 1, duration: 1.2, ease: "power2.out",
+      }, 0.3);
+    }
   }
 
+  /* ---------- Hero-fade attribute (standalone elements) ---------- */
   gsap.utils.toArray("[data-hero-fade]").forEach(function (el, i) {
     gsap.fromTo(el, { y: 24, opacity: 0 }, {
-      y: 0, opacity: 1, duration: 1, ease: "expo.out", delay: 0.6 + i * 0.08
+      y: 0, opacity: 1, duration: 1, ease: "expo.out", delay: 0.5 + i * 0.08
     });
   });
 
   /* ---------- Page-hero entrance (inner pages) ---------- */
-  var pageHero = document.querySelector(".page-hero");
   if (pageHero) {
+    var ptl = gsap.timeline({ delay: 0.1 });
+
     var phLines = pageHero.querySelectorAll(".line-mask > span");
     if (phLines.length) {
-      gsap.to(phLines, {
-        yPercent: 0, duration: 1.2, ease: "expo.out", stagger: 0.08, delay: 0.15
-      });
+      gsap.set(phLines, { yPercent: 110 });
+      ptl.to(phLines, {
+        yPercent: 0, duration: 1.2, ease: "expo.out", stagger: 0.08,
+      }, 0);
     }
+
     var phReveals = pageHero.querySelectorAll(".reveal");
-    gsap.fromTo(phReveals, { y: 24, opacity: 0 }, {
-      y: 0, opacity: 1, duration: 1.1, ease: "expo.out", stagger: 0.06, delay: 0.3
-    });
-    var phFades = pageHero.querySelectorAll(".reveal-fade");
-    gsap.fromTo(phFades, { opacity: 0 }, {
-      opacity: 1, duration: 1.2, ease: "power2.out", delay: 0.4
-    });
+    if (phReveals.length) {
+      gsap.set(phReveals, { y: 24, opacity: 0 });
+      ptl.to(phReveals, {
+        y: 0, opacity: 1, duration: 1.1, ease: "expo.out", stagger: 0.06,
+      }, 0.2);
+    }
+
     var phImgs = pageHero.querySelectorAll(".reveal-img");
-    gsap.fromTo(phImgs, { scale: 1.06, opacity: 0 }, {
-      scale: 1, opacity: 1, duration: 1.6, ease: "expo.out", delay: 0.2
-    });
+    if (phImgs.length) {
+      gsap.set(phImgs, { scale: 1.06, opacity: 0 });
+      ptl.to(phImgs, {
+        scale: 1, opacity: 1, duration: 1.6, ease: "expo.out",
+      }, 0.15);
+    }
+
+    var phFades = pageHero.querySelectorAll(".reveal-fade");
+    if (phFades.length) {
+      gsap.set(phFades, { opacity: 0 });
+      ptl.to(phFades, {
+        opacity: 1, duration: 1.2, ease: "power2.out",
+      }, 0.3);
+    }
   }
 
   /* ---------- Generic reveal on scroll ---------- */
   gsap.utils.toArray(".reveal").forEach(function (el) {
-    if (isInsideHero(el) || (pageHero && pageHero.contains(el))) return;
+    if (isHeroElement(el)) return;
     gsap.to(el, {
       y: 0, opacity: 1, duration: 1.1, ease: "expo.out",
       scrollTrigger: { trigger: el, start: "top 90%", once: true }
@@ -106,7 +133,7 @@
   });
 
   gsap.utils.toArray(".reveal-fade").forEach(function (el) {
-    if (isInsideHero(el) || (pageHero && pageHero.contains(el))) return;
+    if (isHeroElement(el)) return;
     gsap.to(el, {
       opacity: 1, duration: 1.4, ease: "power2.out",
       scrollTrigger: { trigger: el, start: "top 92%", once: true }
@@ -114,7 +141,7 @@
   });
 
   gsap.utils.toArray(".reveal-img").forEach(function (el) {
-    if (isInsideHero(el) || (pageHero && pageHero.contains(el))) return;
+    if (isHeroElement(el)) return;
     gsap.to(el, {
       scale: 1, opacity: 1, duration: 1.6, ease: "expo.out",
       scrollTrigger: { trigger: el, start: "top 92%", once: true }
