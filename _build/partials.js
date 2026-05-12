@@ -140,7 +140,7 @@ function head(meta, outPath) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="${r}assets/css/styles.css" />
+  <link rel="stylesheet" href="${r}assets/css/styles.css?v=${Date.now()}" />
   <link rel="stylesheet" href="${r}assets/css/reactbits.css" />
 
   ${jsonLd
@@ -281,8 +281,8 @@ function scripts(outPath) {
   return `
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-  <script src="${r}assets/js/app.js" defer></script>
-  <script src="${r}assets/js/animations.js" defer></script>
+  <script src="${r}assets/js/app.js?v=${Date.now()}" defer></script>
+  <script src="${r}assets/js/animations.js?v=${Date.now()}" defer></script>
   <script src="${r}assets/js/reactbits.js" defer></script>`;
 }
 

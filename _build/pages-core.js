@@ -66,7 +66,7 @@ const IMG = {
   diningRoom:   U("1556909114-f6e7ad7d3136"),
 
   /* Cinematic moments */
-  windowLight:  U("1518002171953-a080ee817e1f"),
+  windowLight:  U("1499916078039-922301b0eb9b"),
   warmRoom:     U("1572025442646-866d16c84a54"),
   emptyDoorway: U("1505691938895-1758d7feb511"),
 };
