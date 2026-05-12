@@ -29,7 +29,7 @@ const IMG = {
   valley:       U("1502301197179-65228ab57f78"),
 
   /* People — elderly + multi-generation (humane) */
-  elderlyCouple:  U("1581579438747-104c53e7e9ae"),
+  elderlyCouple:  U("1516733725897-1aa73b1e1da2"),
   elderlyHands:   U("1559963110-71b394e7494d"),
   elderlyWoman:   U("1581579188871-45ea61f2a0c8"),
   elderlyMan:     U("1547425260-76bcadfb4f2c"),
@@ -44,7 +44,7 @@ const IMG = {
   hands:         U("1521791136064-7986c2920216"),
   handsTea:      U("1495774856032-8b90bbb32b32"),
   handsBook:     U("1481627834876-b7833e8f5570"),
-  handsCoffee:   U("1442020-7eef42226a21"), /* fallback */
+  handsCoffee:   U("1509042239860-f550ce710b93"),
   kitchen:       U("1556909114-f6e7ad7d3136"),
   kitchenWarm:   U("1556909195-32fa55a3b3c5"),
 
