@@ -80,11 +80,17 @@
     });
   });
 
-  /* ---------- Intake form → Supabase webhook ---------- */
+  /* ---------- Intake form → Supabase webhook ----------
+     The webhook function lives behind Supabase's gateway, which requires
+     an Authorization: Bearer <publishable-key> header. The publishable
+     key is safe to expose in client JS — it only grants invocation of
+     functions that themselves enforce their own auth (in our case the
+     X-Webhook-Key header for team routing). */
   const intake = document.getElementById("intakeForm");
   if (intake) {
-    const WEBHOOK = "https://ayskxkjorhoaknkqtyvm.supabase.co/functions/v1/webhook-receive?key=e3302b5d21fc46979aacd6da8576642f";
-    const LIST = "Oregon Probate Experts";
+    const WEBHOOK_BASE = "https://ayskxkjorhoaknkqtyvm.supabase.co/functions/v1/webhook-receive";
+    const WEBHOOK_KEY = "e3302b5d21fc46979aacd6da8576642f";
+    const PUBLISHABLE = "sb_publishable_i1rp2I2Sk5CpubqIu4MqQw_nzNRqwOl";
     const status = document.getElementById("intakeStatus");
 
     function showStatus(msg, ok) {
@@ -99,34 +105,54 @@
     intake.addEventListener("submit", async (e) => {
       e.preventDefault();
       const fd = new FormData(intake);
+      const name = (fd.get("name") || "").toString().trim();
+      const role = (fd.get("role") || "").toString().trim();
+      const email = (fd.get("email") || "").toString().trim();
+      const phone = (fd.get("phone") || "").toString().trim();
+      const county = (fd.get("county") || "").toString().trim();
+      const city = (fd.get("city") || "").toString().trim();
+      const msg = (fd.get("msg") || "").toString().trim();
+
+      const notesParts = [
+        role && `Role: ${role}`,
+        county && `County: ${county}`,
+        city && `City: ${city}`,
+        msg && `Message:\n${msg}`,
+        `Page: ${window.location.pathname}`,
+        `Submitted: ${new Date().toISOString()}`,
+      ].filter(Boolean);
+
       const payload = {
-        list: LIST,
+        name,
+        email,
+        phone,
         source: "exitprobateteam.com — intake form",
-        submittedAt: new Date().toISOString(),
-        page: window.location.pathname,
-        userAgent: navigator.userAgent,
-        name: fd.get("name"),
-        role: fd.get("role"),
-        email: fd.get("email"),
-        phone: fd.get("phone"),
-        county: fd.get("county"),
-        city: fd.get("city"),
-        message: fd.get("msg"),
+        notes: notesParts.join("\n\n"),
       };
+
       const btn = intake.querySelector("button[type=submit]");
       const original = btn.innerHTML;
       btn.disabled = true;
       btn.innerHTML = "Sending… <span class=\"arrow\">↗</span>";
       try {
-        const res = await fetch(WEBHOOK, {
+        const res = await fetch(WEBHOOK_BASE, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + PUBLISHABLE,
+            "apikey": PUBLISHABLE,
+            "X-Webhook-Key": WEBHOOK_KEY,
+          },
           body: JSON.stringify(payload),
         });
-        if (!res.ok) throw new Error("HTTP " + res.status);
+        if (!res.ok) {
+          const body = await res.text().catch(() => "");
+          throw new Error("HTTP " + res.status + " " + body.slice(0, 200));
+        }
         showStatus("Received. We'll be in touch within one business day.", true);
         intake.reset();
       } catch (err) {
+        console.error("[intake] submission failed:", err);
         showStatus("Couldn't submit just now — please call (541) 525-3268 or email hello@exitprobateteam.com.", false);
       } finally {
         btn.disabled = false;

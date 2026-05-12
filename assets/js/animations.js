@@ -71,4 +71,62 @@
       scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true }
     });
   });
+
+  /* ---------- Process rail: highlight the active step pip ---------- */
+  (function () {
+    var rail = document.querySelector(".process-rail .rail");
+    if (!rail) return;
+    var pips = Array.prototype.slice.call(rail.querySelectorAll(".pip"));
+    var steps = Array.prototype.slice.call(document.querySelectorAll(".process-rail .step"));
+    if (!pips.length || pips.length !== steps.length) return;
+
+    steps.forEach(function (step, i) {
+      if (!window.ScrollTrigger) return;
+      ScrollTrigger.create({
+        trigger: step,
+        start: "top 60%",
+        end: "bottom 40%",
+        onToggle: function (self) {
+          if (self.isActive) {
+            pips.forEach(function (p) { p.classList.remove("active"); });
+            pips[i].classList.add("active");
+          }
+        },
+      });
+    });
+  })();
+
+  /* ---------- Stat counter: count up on first view ---------- */
+  (function () {
+    var stats = document.querySelectorAll(".stat-strip .stat .n");
+    if (!stats.length || !window.ScrollTrigger) return;
+    stats.forEach(function (el) {
+      var raw = el.textContent.trim();
+      var match = raw.match(/^([0-9]+)/);
+      if (!match) return;
+      var target = parseInt(match[1], 10);
+      if (!isFinite(target) || target === 0) return;
+      var suffix = raw.slice(match[1].length);
+      var started = false;
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top 88%",
+        once: true,
+        onEnter: function () {
+          if (started) return; started = true;
+          var obj = { v: 0 };
+          gsap.to(obj, {
+            v: target,
+            duration: 1.6,
+            ease: "expo.out",
+            onUpdate: function () {
+              el.firstChild && (el.firstChild.nodeType === 3)
+                ? (el.firstChild.nodeValue = Math.round(obj.v).toString())
+                : null;
+            },
+          });
+        },
+      });
+    });
+  })();
 })();

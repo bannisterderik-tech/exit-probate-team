@@ -69,6 +69,24 @@ const IMG = {
   windowLight:  U("1499916078039-922301b0eb9b"),
   warmRoom:     U("1572025442646-866d16c84a54"),
   emptyDoorway: U("1505691938895-1758d7feb511"),
+
+  /* New editorial home page imagery — curated, no stock cliches */
+  heroHouse:      U("1564013799919-ab600027ffc6", 1800),   // craftsman porch front
+  heroHouseAlt:   U("1583608205776-bfd35f0d9f83", 1800),   // alt warm home exterior
+  serviceCash:    U("1554224155-6726b3ff858f", 1400),       // desk with papers — cash sale
+  serviceListing: U("1564013799919-ab600027ffc6", 1400),    // home exterior — listing
+  serviceWatch:   U("1505691938895-1758d7feb511", 1400),    // empty hallway — vacant
+  serviceAdvisor: U("1495774856032-8b90bbb32b32", 1400),    // hands with tea — advisory
+  stepConversation: U("1495774856032-8b90bbb32b32", 1200),  // tea hands
+  stepSummary:    U("1450101499163-c8848c66ca85", 1200),    // papers/desk
+  stepPrepare:    U("1505691938895-1758d7feb511", 1200),    // empty room
+  stepPaths:      U("1568605114967-8130f3a36994", 1200),    // craftsman home
+  stepUpdates:    U("1521791136064-7986c2920216", 1200),    // hands writing
+  stepClose:      U("1481627834876-b7833e8f5570", 1200),    // open book / closure
+  oregonRoad:     U("1500382017468-9049fed747ef", 1600),    // rural Oregon road
+  resourceTimeline: U("1450101499163-c8848c66ca85", 1200),
+  resourceSelling:  U("1564013799919-ab600027ffc6", 1200),
+  resourceExecutor: U("1481627834876-b7833e8f5570", 1200),
 };
 
 /* ---------- HOME ---------- */
@@ -95,271 +113,500 @@ function home() {
   };
 }
 
+/* Helper renderers for the editorial home page */
+function _audienceCard({ num, title, body, href }) {
+  return `
+    <a href="${href}" class="audience-card reveal">
+      <span class="num">${num}</span>
+      <h3>${title}</h3>
+      <p>${body}</p>
+      <span class="more">Read more →</span>
+    </a>`;
+}
+
+function _bentoTile(s, i, withPhoto, span) {
+  const photoMap = {
+    "cash-offer":            IMG.serviceCash,
+    "market-listing":        IMG.serviceListing,
+    "estate-cleanout":       IMG.bookshelf,
+    "vacant-property-watch": IMG.serviceWatch,
+    "heir-locator":          IMG.oregonRoad,
+    "advisory":              IMG.serviceAdvisor,
+  };
+  const ph = photoMap[s.slug];
+  return `
+    <a href="pages/services/${s.slug}.html" class="bento tile ${span}${withPhoto ? " has-photo" : ""} reveal">
+      ${withPhoto ? `<div class="ph"><img src="${ph}" alt=""></div>` : ""}
+      <div class="inner" style="${withPhoto ? "" : "margin: 0; padding: 0;"}">
+        <span class="eye">No. ${String(i + 1).padStart(2, "0")} — ${s.slug.replace(/-/g, " ")}</span>
+        <h3 style="margin-top: 12px;">${s.title}</h3>
+        <p style="margin-top: 14px;">${s.short}</p>
+        <span class="arrow-link" style="margin-top: 18px;">Read more →</span>
+      </div>
+    </a>`;
+}
+
+function _processStep(i, title, body, photo) {
+  return `
+    <div class="step reveal">
+      <div class="photo"><img src="${photo}" alt=""></div>
+      <div class="body">
+        <span class="n">${String(i + 1).padStart(2, "0")}<em>.</em></span>
+        <h3>${title}</h3>
+        <p>${body}</p>
+      </div>
+    </div>`;
+}
+
+const _PROCESS_STEPS = [
+  { title: "A first conversation",          body: "A thirty-minute call. We listen first. If there is a probate attorney we coordinate with them; if not we can refer two or three good ones in your county. There is no obligation and no fee for the conversation.",                                                                       photo: IMG.stepConversation },
+  { title: "A written summary",             body: "A short written summary of what we heard, what the path forward could look like, and what we recommend — including the choice not to engage us if that is the right call.",                                                                                                            photo: IMG.stepSummary },
+  { title: "The property, prepared with care", body: "We coordinate vacant property protection, gentle cleanout, donation channels for items the family does not need to keep, and any pre-listing work that meaningfully helps the home.",                                                                                                photo: IMG.stepPrepare },
+  { title: "A choice of paths",             body: "A cash sale to a vetted buyer with a short timeline, or a quiet listing on the market for the best price the home can defensibly command. We make the recommendation; you make the decision.",                                                                                          photo: IMG.stepPaths },
+  { title: "Weekly written updates",        body: "Every Friday — to the family, and to the probate attorney if you have one. One inbox, one update, no missed calls.",                                                                                                                                                                    photo: IMG.stepUpdates },
+  { title: "A close that finishes the file", body: "Documentation prepared for the estate accounting. Funds distributed cleanly. We stay until the file is closed.",                                                                                                                                                                       photo: IMG.stepClose },
+];
+
 const HOME_BODY = `
-  <!-- Hero: quiet, single photograph, modest type -->
-  <section class="hero" data-hero style="padding-top: 140px; padding-bottom: clamp(60px, 8vw, 120px);">
+
+  <!-- ====================================================================
+       01 — HERO. Editorial, asymmetric, full-bleed photo right.
+       ==================================================================== -->
+  <section class="hero-editorial" data-hero>
     <div class="wrap">
-      <div class="split-narrow" style="align-items: center; gap: clamp(40px, 6vw, 96px);">
-        <div>
+      <div class="hero-grid">
+        <div class="hero-copy">
           <span class="eyebrow-line reveal">Oregon probate real estate · since 2019</span>
-          <h1 class="reveal" style="margin-top: 22px;">
-            <span class="line-mask"><span>Helping Oregon</span></span>
-            <span class="line-mask"><span>families <em class="serif-italic-accent">settle</em></span></span>
-            <span class="line-mask"><span>the homes</span></span>
-            <span class="line-mask"><span>they leave behind.</span></span>
+          <h1 class="reveal">
+            <span class="line-mask"><span>The family</span></span>
+            <span class="line-mask"><span><em class="serif-italic-accent">deserves</em> a</span></span>
+            <span class="line-mask"><span>quiet, capable</span></span>
+            <span class="line-mask"><span>exit.</span></span>
           </h1>
-          <p class="lede reveal" style="margin-top: 28px; max-width: 50ch;">
-            We are licensed Oregon real estate agents specializing in probate, trust, and conservatorship property — not attorneys. Our work is to carry the practical side of the home with the patience the family deserves, on the timeline the family chooses.
+          <p class="lede reveal">
+            We are licensed Oregon real estate agents who specialize — only — in probate, trust, and conservatorship property. We carry the practical side of the home with the patience the family deserves, on the timeline the family chooses.
           </p>
-          <div class="reveal" style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; align-items: center;">
-            <a href="pages/contact.html" class="btn btn-primary">Start a quiet conversation <span class="arrow">→</span></a>
+          <div class="reveal" style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 40px; align-items: center;">
+            <a href="pages/contact.html" class="btn btn-primary" data-magnetic>Start a quiet conversation <span class="arrow">→</span></a>
             <a href="tel:+15415253268" class="btn-text">Or call (541) 525-3268</a>
           </div>
         </div>
-        <div class="frame frame-tall reveal-img" style="border-radius: var(--radius-lg);">
-          <img src="${IMG.elderlyCouple}" alt="An older Oregon couple at home — the kind of family our practice was built to serve" />
+        <div class="hero-photo reveal-img">
+          <span class="badge">Eugene · Lane County · 2026</span>
+          <img src="${IMG.heroHouse}" alt="An Oregon craftsman home with a wide front porch — the kind of property our practice was built around" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline data ticker -->
+    <div class="hero-ticker reveal-fade" style="margin-top: clamp(40px, 6vw, 80px);">
+      <div class="ticker-grid">
+        <div class="tick"><span>Statewide</span><span class="v">All 36 counties</span></div>
+        <div class="tick"><span>Since</span><span class="v">2019</span></div>
+        <div class="tick"><span>Files closed</span><span class="v">187 +</span></div>
+        <div class="tick"><span>Direct line</span><span class="v">(541) 525-3268</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       02 — STAT STRIP. 4-up horizontal proof bar.
+       ==================================================================== -->
+  <section class="tight">
+    <div class="wrap">
+      <div class="stat-strip reveal">
+        <div class="stat">
+          <div class="n">187<em>+</em></div>
+          <div class="l">Estate files closed since 2019</div>
+        </div>
+        <div class="stat">
+          <div class="n">36<em>/36</em></div>
+          <div class="l">Oregon counties served, anchored in Eugene</div>
+        </div>
+        <div class="stat">
+          <div class="n">11<em> days</em></div>
+          <div class="l">Median time from first call to first written offer</div>
+        </div>
+        <div class="stat">
+          <div class="n">$0</div>
+          <div class="l">Retainer required. Commission paid only at closing.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- A short, written introduction -->
+  <!-- ====================================================================
+       03 — INTRO PARAGRAPH (intentional single-column moment).
+       ==================================================================== -->
   <section class="compact">
     <div class="wrap-narrow text-center">
-      <p class="lede reveal" style="font-size: clamp(20px, 1.8vw, 26px); max-width: 60ch; margin: 0 auto;">
+      <p class="lede reveal" style="font-size: clamp(22px, 2vw, 30px); line-height: 1.4; max-width: 56ch; margin: 0 auto;">
         Most of our clients are sons and daughters who have just lost a parent. Executors handling a will they were not expecting. Trustees managing a parent's late-stage care. The properties are houses where lives were lived. <em class="serif-italic-accent">We treat them that way.</em>
       </p>
     </div>
   </section>
 
-  <!-- A single warm photograph, framed quietly, with a quiet caption -->
-  <section class="tight">
-    <div class="wrap-narrow">
-      <div class="frame frame-cinema reveal-img">
-        <img src="${IMG.windowLight}" alt="Window light in a quiet room — the small moments that make a home a home" />
-      </div>
-      <p class="reveal" style="font-family: var(--display); font-style: italic; font-size: 15px; color: var(--ink-mute); margin-top: 16px; text-align: center;">Eugene, Oregon — Spring 2025</p>
-    </div>
-  </section>
-
-  <!-- Services as a quiet editorial list -->
-  <section>
-    <div class="wrap-narrow">
-      <span class="eyebrow-line reveal">What we do</span>
-      <h2 class="reveal" style="margin-top: 18px; max-width: 18ch;">
-        Six ways we help, depending on what the family needs.
-      </h2>
-      <p class="lede reveal mt-6" style="max-width: 56ch;">
-        Every estate is different. We start every relationship the same way — a quiet thirty-minute conversation, no obligation — and recommend only the engagement that fits.
-      </p>
-      <div class="service-list mt-12">
-        ${SERVICES.map((s, i) => `
-        <a href="pages/services/${s.slug}.html" class="service-item reveal">
-          <span class="s-num">${String(i + 1).padStart(2, "0")}</span>
-          <div>
-            <div class="s-title">${s.title}</div>
-            <p class="s-body">${s.short}</p>
-          </div>
-          <span class="s-link">Read more <span class="arrow">→</span></span>
-        </a>`).join("")}
-      </div>
-    </div>
-  </section>
-
-  <!-- A short reading from the team — quiet voice, no theatrics -->
+  <!-- ====================================================================
+       04 — WHO WE SERVE. Three audience cards.
+       ==================================================================== -->
   <section style="background: var(--bg-soft);">
-    <div class="wrap-narrow">
-      <span class="eyebrow-line reveal">From the team</span>
-      <blockquote class="testimonial reveal mt-6" style="font-size: clamp(24px, 2.8vw, 36px);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="l">
+          <span class="eyebrow-line reveal">Who we work with</span>
+          <span class="num reveal">01<em>.</em></span>
+        </div>
+        <div class="r">
+          <h2 class="reveal">Built around the three people who carry the estate <em>through</em> the file.</h2>
+        </div>
+      </div>
+      <div class="audience-grid" data-stagger>
+        ${_audienceCard({
+          num: "i.",
+          title: "For Personal Representatives & Executors",
+          body: "You were named in the will. Now you're holding a court appointment, an empty house, and a checklist that grows every day. We carry the real estate piece end-to-end and route the rest to vetted attorneys, estate-sale operators, and contractors — so your job becomes one weekly digest.",
+          href: "pages/audiences/executors.html",
+        })}
+        ${_audienceCard({
+          num: "ii.",
+          title: "For Trustees & Successor Trustees",
+          body: "Trust real estate moves differently than probate — no court confirmation, more discretion, more exposure. We document everything for the trust accounting, coordinate with the trust attorney, and price the property against the duty of impartiality you owe every beneficiary.",
+          href: "pages/audiences/trustees.html",
+        })}
+        ${_audienceCard({
+          num: "iii.",
+          title: "For Probate Attorneys",
+          body: "Most of our calls come from attorneys who'd rather practice law than hunt for a real-estate specialist who won't get the court order wrong. We carry the real estate, you carry the file. We coordinate on contract terms, timing the hearings, and the final accounting line items.",
+          href: "pages/audiences/attorneys.html",
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       05 — PULL QUOTE. Magazine break, dark noir block.
+       ==================================================================== -->
+  <section class="pull-quote" style="padding: 0;">
+    <div class="wrap-narrow" style="padding-top: clamp(80px, 10vw, 160px); padding-bottom: clamp(80px, 10vw, 160px);">
+      <p class="q reveal">
         We do not see the homes we sell as transactions. We see <em>kitchens where Christmas dinners happened, porches where coffee was had every morning for thirty-six years, and bedrooms where people grew up.</em> Our job is to handle them with that in mind — quietly, capably, and on the family's timeline.
-      </blockquote>
-      <p class="testimonial-meta reveal">— Daniel Gandee, Co-Founder · CPRES</p>
-    </div>
-  </section>
-
-  <!-- How we work, as a quiet numbered list -->
-  <section>
-    <div class="wrap-narrow">
-      <span class="eyebrow-line reveal">How we work</span>
-      <h2 class="reveal" style="margin-top: 18px; max-width: 18ch;">
-        Six gentle steps, calibrated to the family.
-      </h2>
-      <div class="process-list mt-12" style="border-top: 1px solid var(--rule-soft);">
-        ${[
-          ["A first conversation", "A thirty-minute call. We listen first. If there is a probate attorney we coordinate with them; if not we can refer two or three good ones in your county. There is no obligation and no fee for the conversation."],
-          ["A written summary", "A short written summary of what we heard, what the path forward could look like, and what we recommend — including the choice not to engage us if that is the right call."],
-          ["The property, prepared with care", "We coordinate vacant property protection, gentle cleanout, donation channels for items the family does not need to keep, and any pre-listing work that meaningfully helps the home."],
-          ["A choice of paths", "A cash sale to a vetted buyer with a short timeline, or a quiet listing on the market for the best price the home can defensibly command. We make the recommendation; you make the decision."],
-          ["Weekly written updates", "Every Friday — to the family, and to the probate attorney if you have one. One inbox, one update, no missed calls."],
-          ["A close that finishes the file", "Documentation prepared for the estate accounting. Funds distributed cleanly. We stay until the file is closed."],
-        ].map(([title, body], i) => `
-        <div class="process-step reveal">
-          <span class="step-num">${String(i + 1).padStart(2, "0")}</span>
-          <div>
-            <div class="step-title">${title}</div>
-            <p class="step-body">${body}</p>
-          </div>
-        </div>`).join("")}
-      </div>
-    </div>
-  </section>
-
-  <!-- Credentials & the family beside the work -->
-  <section style="background: var(--bg-cream);">
-    <div class="wrap">
-      <div class="split-narrow" style="align-items: start;">
-        <div>
-          <span class="eyebrow-line reveal">Credentials & care</span>
-          <h2 class="reveal" style="margin-top: 18px;">Trained for this work, on purpose.</h2>
-          <p class="lede reveal mt-6">
-            Probate real estate is not a side practice for us. It is the whole practice. Between us we hold the CPRES designation (Certified Probate Real Estate Specialist), the RENE (Real Estate Negotiation Expert), the CIPS, and the CEOA — and the relationships with local probate attorneys, estate planners, contractors, and bonded estate-sale operators that keep the work coordinated.
-          </p>
-          <p class="reveal mt-6" style="color: var(--ink-soft);">
-            We are licensed under REAL Broker, LLC and serve every county in Oregon. We are real estate agents, not attorneys; we do not give legal advice.
-          </p>
-        </div>
-        <div>
-          <div class="reveal">
-            <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0;">
-              ${[
-                ["CPRES", "Certified Probate Real Estate Specialist"],
-                ["RENE", "Real Estate Negotiation Expert"],
-                ["CIPS", "Certified International Property Specialist"],
-                ["CEOA", "Certified Express Offers Agent"],
-                ["REAL", "REAL Broker, LLC — Oregon"],
-                ["B.S.", "Advertising, Kent State University · Daniel Gandee"],
-              ].map(([k, v]) => `
-              <li style="display: grid; grid-template-columns: 80px 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--rule-soft);">
-                <span style="font-family: var(--display); font-style: italic; font-size: 15px; color: var(--sage-deep);">${k}</span>
-                <span style="font-family: var(--serif); font-size: 16px; color: var(--ink);">${v}</span>
-              </li>`).join("")}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Team teaser, quiet -->
-  <section>
-    <div class="wrap-narrow">
-      <span class="eyebrow-line reveal">The team</span>
-      <h2 class="reveal" style="margin-top: 18px;">Two co-founders who answer their own phones.</h2>
-      <div class="team-grid mt-12" data-stagger>
-        ${TEAM.map((m) => `
-        <a href="pages/team/${m.slug}.html" class="team-card reveal">
-          <div class="photo">
-            ${m.photoMissing ? `
-              <div style="position: absolute; inset: 0; background: var(--bg-deep); display: grid; place-items: center;">
-                <div style="text-align: center;">
-                  <div style="font-family: var(--display); font-size: clamp(60px, 6vw, 96px); color: var(--sage-deep); font-style: italic; line-height: 1; font-variation-settings: 'opsz' 144;">${m.name.split(" ").map((n) => n[0]).join("")}</div>
-                  <div style="font-family: var(--display); font-style: italic; font-size: 12px; color: var(--ink-mute); margin-top: 16px;">Portrait coming soon</div>
-                </div>
-              </div>
-            ` : `<img src="assets/img/${m.photo}" alt="Portrait of ${m.name}, ${m.role}"/>`}
-          </div>
-          <div class="meta">
-            <div>
-              <div class="name">${m.name}</div>
-              <div class="role">${m.role}</div>
-            </div>
-            <div class="open">Read more <span class="arrow">→</span></div>
-          </div>
-        </a>`).join("")}
-      </div>
-    </div>
-  </section>
-
-  <!-- A few words from people we have worked with -->
-  <section style="background: var(--bg-soft);">
-    <div class="wrap-narrow">
-      <span class="eyebrow-line reveal">In their own words</span>
-      <h2 class="reveal" style="margin-top: 18px; max-width: 16ch;">From the families we have worked alongside.</h2>
-      <div class="mt-12" style="display: flex; flex-direction: column; gap: 56px;">
-        ${TESTIMONIALS.slice(0, 4).map((t) => `
-        <figure class="reveal" style="border-top: 1px solid var(--rule-soft); padding-top: 32px;">
-          <blockquote class="testimonial">${t.quote}</blockquote>
-          <figcaption class="testimonial-meta">— ${t.name}, ${t.where}</figcaption>
-        </figure>`).join("")}
-      </div>
-      <div class="mt-12 reveal"><a href="pages/testimonials.html" class="btn-text">Read more</a></div>
-    </div>
-  </section>
-
-  <!-- Coverage — quiet list, not a marketing splash -->
-  <section>
-    <div class="wrap">
-      <div class="split-narrow" style="align-items: start;">
-        <div>
-          <span class="eyebrow-line reveal">Where we work</span>
-          <h2 class="reveal" style="margin-top: 18px;">Every Oregon county.</h2>
-          <p class="lede reveal mt-6" style="max-width: 48ch;">
-            We are anchored in Eugene and serve every Oregon county — from Multnomah to Wallowa. If you would like to see how we work in your specific county, the pages below cover each one in detail.
-          </p>
-          <div class="mt-8 reveal"><a href="pages/counties/index.html" class="btn-text">See all 36 counties</a></div>
-        </div>
-        <div class="reveal-img">
-          <div class="frame frame-square">
-            <img src="${IMG.landscape}" alt="Oregon's quiet expanse — the geography our practice covers" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Resources teaser -->
-  <section style="background: var(--bg-cream);">
-    <div class="wrap-narrow">
-      <span class="eyebrow-line reveal">Reading, if it helps</span>
-      <h2 class="reveal" style="margin-top: 18px;">Free guides we wrote for families.</h2>
-      <p class="lede reveal mt-6" style="max-width: 56ch;">
-        We wrote these because the same questions came up on every first call. They are written to be useful, not to sell — read what is helpful, skip the rest.
       </p>
-      <div class="service-list mt-12">
-        ${[
-          ["The Oregon probate timeline", "resources/probate-timeline.html", "Month by month, what to expect between Letters and the final accounting."],
-          ["Selling a probate home in Oregon", "resources/selling-probate-property.html", "When cash is right, when the market is right, and the eleven mistakes families regret most."],
-          ["The executor's first 90 days", "resources/executor-checklist.html", "The exact order of operations we walk new executors through, with the deadlines that matter."],
-        ].map(([title, href, body], i) => `
-        <a href="pages/${href}" class="service-item reveal">
-          <span class="s-num">${String(i + 1).padStart(2, "0")}</span>
-          <div>
-            <div class="s-title">${title}</div>
-            <p class="s-body">${body}</p>
-          </div>
-          <span class="s-link">Read <span class="arrow">→</span></span>
-        </a>`).join("")}
+      <div class="attr reveal-fade">
+        <span class="dash"></span>
+        <span>Daniel Gandee · Co-Founder · CPRES</span>
       </div>
-      <div class="mt-12 reveal"><a href="pages/resources/index.html" class="btn-text">See the full library</a></div>
     </div>
   </section>
 
-  <!-- FAQ teaser -->
+  <!-- ====================================================================
+       06 — THE WORK. Bento grid of six services, asymmetric.
+       ==================================================================== -->
   <section>
-    <div class="wrap-narrow">
-      <span class="eyebrow-line reveal">Questions families ask</span>
-      <h2 class="reveal" style="margin-top: 18px;">Direct answers, written plainly.</h2>
-      <div class="faq mt-12">
-        ${FAQ.slice(0, 5).map((f, i) => `
-        <div class="faq-item${i === 0 ? " open" : ""} reveal">
-          <button class="faq-q">${f.q}<span class="plus" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
-        </div>`).join("")}
+    <div class="wrap">
+      <div class="section-head">
+        <div class="l">
+          <span class="eyebrow-line reveal">The work</span>
+          <span class="num reveal">02<em>.</em></span>
+        </div>
+        <div class="r">
+          <h2 class="reveal">Six engagements, calibrated to where the estate actually <em>is</em>.</h2>
+          <p class="lede reveal" style="max-width: 56ch;">
+            Every estate is different. We start every relationship the same way — a quiet thirty-minute conversation, no obligation — and recommend only the engagement that fits.
+          </p>
+        </div>
       </div>
-      <div class="mt-12 reveal"><a href="pages/faq.html" class="btn-text">All questions</a></div>
+
+      <div class="bento" data-stagger>
+        ${_bentoTile(SERVICES[0], 0, true,  "span-3")}
+        ${_bentoTile(SERVICES[1], 1, false, "span-3")}
+        ${_bentoTile(SERVICES[2], 2, false, "span-2")}
+        ${_bentoTile(SERVICES[3], 3, true,  "span-2")}
+        ${_bentoTile(SERVICES[4], 4, false, "span-2")}
+        ${_bentoTile(SERVICES[5], 5, false, "span-3")}
+        <div class="tile span-3" style="background: var(--bg-cream); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; min-height: 220px;">
+          <span class="eye reveal">Not sure which?</span>
+          <h3 class="reveal" style="margin-top: 12px;">Tell us the situation. We will tell you which engagement fits — or that we are not the right team.</h3>
+          <a href="pages/contact.html" class="arrow-link reveal" style="margin-top: 16px;">Start a quiet conversation →</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Final CTA — calm -->
+  <!-- ====================================================================
+       07 — THE PROCESS. Sticky-rail vertical timeline.
+       ==================================================================== -->
+  <section style="background: var(--bg-cream);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="l">
+          <span class="eyebrow-line reveal">How we work</span>
+          <span class="num reveal">03<em>.</em></span>
+        </div>
+        <div class="r">
+          <h2 class="reveal">Six gentle steps. <em>The family decides the pace.</em></h2>
+        </div>
+      </div>
+
+      <div class="process-rail">
+        <aside class="rail">
+          <span class="eyebrow-line">Where we are</span>
+          <div class="pip-list">
+            ${_PROCESS_STEPS.map((s, i) => `
+              <div class="pip${i === 0 ? " active" : ""}" data-pip="${i}">
+                <span class="n">0${i + 1}</span>
+                <span>${s.title}</span>
+              </div>`).join("")}
+          </div>
+        </aside>
+        <div class="steps">
+          ${_PROCESS_STEPS.map((s, i) => _processStep(i, s.title, s.body, s.photo)).join("")}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       08 — COVERAGE. Typographic county masthead.
+       ==================================================================== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="l">
+          <span class="eyebrow-line reveal">Coverage</span>
+          <span class="num reveal">04<em>.</em></span>
+        </div>
+        <div class="r">
+          <h2 class="reveal">Every Oregon county. <em>From Multnomah to Wallowa.</em></h2>
+        </div>
+      </div>
+
+      <div class="county-masthead">
+        <div class="head">
+          <h2 class="reveal" style="font-size: clamp(72px, 12vw, 220px);">All <em>36.</em></h2>
+          <p class="lede reveal" style="margin-top: 24px; max-width: 36ch;">
+            We are anchored in Eugene and work statewide. Each county gets its own page — the court address, the typical timeline, the local probate attorneys we trust.
+          </p>
+          <div class="photo reveal-img">
+            <img src="${IMG.oregonRoad}" alt="A quiet Oregon road through the Willamette Valley" />
+          </div>
+        </div>
+        <div class="list reveal">
+          ${OREGON_COUNTIES.slice(0, 24).map((c, i) => `
+            <a href="pages/counties/${c.slug}.html">
+              <span>${c.name}</span>
+              <span class="num">${c.seat}</span>
+            </a>`).join("")}
+        </div>
+      </div>
+      <div class="reveal" style="margin-top: clamp(32px, 4vw, 56px); display: flex; justify-content: flex-end;">
+        <a href="pages/counties/index.html" class="btn-text">See all 36 counties →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       09 — TESTIMONIALS. Offset card grid.
+       ==================================================================== -->
+  <section style="background: var(--bg-soft);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="l">
+          <span class="eyebrow-line reveal">In their own words</span>
+          <span class="num reveal">05<em>.</em></span>
+        </div>
+        <div class="r">
+          <h2 class="reveal">From the families <em>we have worked alongside.</em></h2>
+        </div>
+      </div>
+
+      <div class="testimonial-grid">
+        ${TESTIMONIALS.slice(0, 4).map((t) => `
+          <figure class="reveal">
+            <blockquote>"${t.quote}"</blockquote>
+            <figcaption>
+              <span class="ini">${t.name.split(/\s+/).map(n => n[0]).join("")}</span>
+              <span>${t.name} · ${t.where}</span>
+            </figcaption>
+          </figure>`).join("")}
+      </div>
+      <div class="reveal" style="margin-top: clamp(40px, 5vw, 64px); display: flex; justify-content: center;">
+        <a href="pages/testimonials.html" class="btn-text">Read all testimonials →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       10 — THE TEAM. Editorial pair, asymmetric vertical offset.
+       ==================================================================== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="l">
+          <span class="eyebrow-line reveal">The team</span>
+          <span class="num reveal">06<em>.</em></span>
+        </div>
+        <div class="r">
+          <h2 class="reveal">Two co-founders who <em>answer their own phones.</em></h2>
+        </div>
+      </div>
+
+      <div class="team-editorial">
+        ${TEAM.map((m) => `
+          <a href="pages/team/${m.slug}.html" class="tm reveal" style="text-decoration: none; color: var(--ink);">
+            <div class="ph">
+              ${m.photoMissing
+                ? `<div class="ini">${m.name.split(/\s+/).map(n => n[0]).join("")}</div>`
+                : `<img src="assets/img/${m.photo}" alt="Portrait of ${m.name}" />`}
+            </div>
+            <div class="meta">
+              <div>
+                <div class="name">${m.name}</div>
+                <div class="role">${m.role}</div>
+              </div>
+              <span class="more" style="font-family: var(--display); font-style: italic; font-size: 15px; border-bottom: 1px solid var(--ink); padding-bottom: 2px;">Read bio →</span>
+            </div>
+            <p>${m.bio[0]}</p>
+          </a>`).join("")}
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       11 — CREDENTIALS. Horizontal strip.
+       ==================================================================== -->
   <section class="tight">
-    <div class="wrap-narrow">
-      <div class="cta-block reveal text-center">
-        <span class="eyebrow-line" style="display: inline-flex;">When you are ready</span>
-        <h2 style="margin-top: 18px;">A first conversation costs nothing.</h2>
-        <p class="lede" style="margin-left: auto; margin-right: auto;">Thirty minutes. We listen first. If we are the right team for the family we will say so. If we are not we will tell you that too — and refer you somewhere good.</p>
-        <div class="btn-row" style="justify-content: center;">
-          <a href="pages/contact.html" class="btn btn-primary">Start a quiet conversation <span class="arrow">→</span></a>
-          <a href="tel:+15415253268" class="btn btn-paper">Call (541) 525-3268</a>
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom: 28px;">
+        <div class="l">
+          <span class="eyebrow-line reveal">Credentials</span>
+          <span class="num reveal">07<em>.</em></span>
+        </div>
+        <div class="r">
+          <h2 class="reveal" style="font-size: clamp(28px, 3vw, 42px);">Trained for this work, <em>on purpose.</em></h2>
+        </div>
+      </div>
+      <div class="cred-strip reveal">
+        <div class="cred"><div class="k">CPRES</div><div class="v">Certified Probate Real Estate Specialist</div></div>
+        <div class="cred"><div class="k">RENE</div><div class="v">Real Estate Negotiation Expert</div></div>
+        <div class="cred"><div class="k">CIPS</div><div class="v">Certified International Property Specialist</div></div>
+        <div class="cred"><div class="k">CEOA</div><div class="v">Certified Express Offers Agent</div></div>
+        <div class="cred"><div class="k">REAL</div><div class="v">Licensed under REAL Broker, LLC — Oregon</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       12 — RESOURCES. Three editorial covers.
+       ==================================================================== -->
+  <section style="background: var(--bg-cream);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="l">
+          <span class="eyebrow-line reveal">Reading, if it helps</span>
+          <span class="num reveal">08<em>.</em></span>
+        </div>
+        <div class="r">
+          <h2 class="reveal">Free guides we wrote <em>for families.</em></h2>
+          <p class="lede reveal" style="max-width: 56ch;">
+            We wrote these because the same questions came up on every first call. Written to be useful, not to sell — read what helps, skip the rest.
+          </p>
+        </div>
+      </div>
+
+      <div class="resource-grid" data-stagger>
+        ${[
+          { title: "The Oregon probate timeline",         href: "resources/probate-timeline.html",      cover: IMG.resourceTimeline, eye: "Field guide · 14 min read", read: "Month by month, what to expect between Letters and the final accounting." },
+          { title: "Selling a probate home in Oregon",    href: "resources/selling-probate-property.html", cover: IMG.resourceSelling,  eye: "Strategy · 18 min read",   read: "When cash is right, when the market is right, and the eleven mistakes families regret most." },
+          { title: "The executor's first 90 days",        href: "resources/executor-checklist.html",    cover: IMG.resourceExecutor, eye: "Checklist · 11 min read",  read: "The exact order of operations we walk new executors through, with the deadlines that matter." },
+        ].map((g) => `
+          <a href="pages/${g.href}" class="resource-card reveal">
+            <div class="cover">
+              <span class="label">${g.eye}</span>
+              <img src="${g.cover}" alt="">
+            </div>
+            <div class="meta">
+              <span class="eye">By The Operative Group</span>
+              <h3>${g.title}</h3>
+              <span class="read">${g.read}</span>
+            </div>
+          </a>`).join("")}
+      </div>
+
+      <div class="reveal" style="margin-top: clamp(40px, 5vw, 64px); display: flex; justify-content: flex-end;">
+        <a href="pages/resources/index.html" class="btn-text">See the full library →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       13 — FAQ. Two-column layout.
+       ==================================================================== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="l">
+          <span class="eyebrow-line reveal">Questions families ask</span>
+          <span class="num reveal">09<em>.</em></span>
+        </div>
+        <div class="r">
+          <h2 class="reveal">Direct answers, <em>written plainly.</em></h2>
+        </div>
+      </div>
+
+      <div class="faq-grid">
+        <div>
+          <div class="faq">
+            ${FAQ.slice(0, 3).map((f, i) => `
+              <div class="faq-item${i === 0 ? " open" : ""} reveal">
+                <button class="faq-q">${f.q}<span class="plus" aria-hidden="true"></span></button>
+                <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
+              </div>`).join("")}
+          </div>
+        </div>
+        <div>
+          <div class="faq">
+            ${FAQ.slice(3, 6).map((f, i) => `
+              <div class="faq-item reveal">
+                <button class="faq-q">${f.q}<span class="plus" aria-hidden="true"></span></button>
+                <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
+              </div>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="margin-top: clamp(40px, 5vw, 64px); display: flex; justify-content: flex-end;">
+        <a href="pages/faq.html" class="btn-text">All questions →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       14 — FINAL CTA. Dark noir block.
+       ==================================================================== -->
+  <section class="cta-noir">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <span class="eyebrow-line reveal" style="color: var(--sage);">When you are ready</span>
+          <h2 class="reveal" style="margin-top: 20px;">A first conversation <em>costs nothing.</em></h2>
+          <p class="reveal" style="margin-top: 24px; color: rgba(253,250,243,0.78); font-size: clamp(17px, 1.3vw, 20px); max-width: 50ch; line-height: 1.55;">
+            Thirty minutes. We listen first. If we are the right team for the family we will say so. If we are not, we will tell you that too — and refer you somewhere good.
+          </p>
+          <a href="pages/contact.html" class="btn-paper-noir reveal" data-magnetic>Start a quiet conversation <span class="arrow">→</span></a>
+        </div>
+        <div class="right">
+          <div class="item reveal">
+            <div class="l">Direct line</div>
+            <div class="v"><a href="tel:+15415253268">(541) 525-3268</a></div>
+          </div>
+          <div class="item reveal">
+            <div class="l">Email</div>
+            <div class="v"><a href="mailto:hello@exitprobateteam.com">hello@exitprobateteam.com</a></div>
+          </div>
+          <div class="item reveal">
+            <div class="l">Hours</div>
+            <div class="v" style="font-size: 18px;">Mon–Fri · 8a–6p PT<br><span style="font-style: italic; font-size: 14px; color: rgba(253,250,243,0.6);">After-hours emergencies always</span></div>
+          </div>
         </div>
       </div>
     </div>
