@@ -80,18 +80,15 @@
     });
   });
 
-  /* ---------- Intake form → Supabase webhook ----------
-     The webhook function lives behind Supabase's gateway, which requires
-     an Authorization: Bearer <publishable-key> header (publishable key
-     is safe to expose in client JS). The team-routing webhook key is
-     passed via ?key= URL param — using a custom X-Webhook-Key header
-     would require the function's CORS Allow-Headers list to include
-     that header, which it doesn't (and we don't control deploy). */
+  /* ---------- Intake form → RealtyGrind webhook ----------
+     Auth: webhook key in X-Webhook-Key header (the function's own
+     custom auth — Supabase gateway JWT verification is off). The
+     function's CORS Allow-Headers list includes x-webhook-key so no
+     extra preflight gymnastics needed. */
   const intake = document.getElementById("intakeForm");
   if (intake) {
-    const WEBHOOK_KEY = "e3302b5d21fc46979aacd6da8576642f";
-    const PUBLISHABLE = "sb_publishable_i1rp2I2Sk5CpubqIu4MqQw_nzNRqwOl";
-    const WEBHOOK = "https://ayskxkjorhoaknkqtyvm.supabase.co/functions/v1/webhook-receive?key=" + encodeURIComponent(WEBHOOK_KEY);
+    const WEBHOOK = "https://ayskxkjorhoaknkqtyvm.supabase.co/functions/v1/webhook-receive";
+    const WEBHOOK_KEY = "9b39d274ac48446abb5d0e63241a6a93d01c5b81";
     const status = document.getElementById("intakeStatus");
 
     function showStatus(msg, ok) {
@@ -101,6 +98,15 @@
       status.style.background = ok ? "rgba(109,178,62,0.12)" : "rgba(184,89,57,0.12)";
       status.style.color = ok ? "var(--accent-deep)" : "var(--terracotta)";
       status.style.border = "1px solid " + (ok ? "var(--accent)" : "var(--terracotta)");
+    }
+
+    /* Probate clients are almost always selling inherited property —
+       executors, trustees, and personal representatives all default to
+       "seller". Attorneys are referrers, not sellers themselves. */
+    function inferLeadType(role) {
+      const r = (role || "").toLowerCase();
+      if (r.includes("attorney")) return "referrer";
+      return "seller";
     }
 
     intake.addEventListener("submit", async (e) => {
@@ -117,18 +123,30 @@
       const notesParts = [
         role && `Role: ${role}`,
         county && `County: ${county}`,
-        city && `City: ${city}`,
         msg && `Message:\n${msg}`,
         `Page: ${window.location.pathname}`,
         `Submitted: ${new Date().toISOString()}`,
       ].filter(Boolean);
+
+      const tags = ["Probate Lead", "Oregon"];
+      if (role) tags.push(role);
+      if (county) tags.push(`${county} County`);
 
       const payload = {
         name,
         email,
         phone,
         source: "exitprobateteam.com — intake form",
+        lead_type: inferLeadType(role),
+        temperature: "warm",
+        city,
+        state: "OR",
+        county,
         notes: notesParts.join("\n\n"),
+        tags,
+        how_heard: "Website — exitprobateteam.com",
+        consent_sms: true,
+        consent_email: true,
       };
 
       const btn = intake.querySelector("button[type=submit]");
@@ -140,8 +158,7 @@
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + PUBLISHABLE,
-            "apikey": PUBLISHABLE,
+            "X-Webhook-Key": WEBHOOK_KEY,
           },
           body: JSON.stringify(payload),
         });
