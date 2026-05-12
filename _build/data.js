@@ -1,0 +1,237 @@
+/* =====================================================================
+   Site data — counties, cities, team, services, resources
+   ===================================================================== */
+"use strict";
+
+const OREGON_COUNTIES = [
+  { slug: "baker",      name: "Baker",      seat: "Baker City",    pop: 16668,  court: "Baker County Circuit Court",     region: "Eastern Oregon" },
+  { slug: "benton",     name: "Benton",     seat: "Corvallis",     pop: 96088,  court: "Benton County Circuit Court",    region: "Willamette Valley" },
+  { slug: "clackamas",  name: "Clackamas",  seat: "Oregon City",   pop: 421401, court: "Clackamas County Circuit Court", region: "Portland Metro" },
+  { slug: "clatsop",    name: "Clatsop",    seat: "Astoria",       pop: 41063,  court: "Clatsop County Circuit Court",   region: "Oregon Coast" },
+  { slug: "columbia",   name: "Columbia",   seat: "St. Helens",    pop: 53076,  court: "Columbia County Circuit Court",  region: "Portland Metro" },
+  { slug: "coos",       name: "Coos",       seat: "Coquille",      pop: 64552,  court: "Coos County Circuit Court",      region: "Oregon Coast" },
+  { slug: "crook",      name: "Crook",      seat: "Prineville",    pop: 25393,  court: "Crook County Circuit Court",     region: "Central Oregon" },
+  { slug: "curry",      name: "Curry",      seat: "Gold Beach",    pop: 23493,  court: "Curry County Circuit Court",     region: "Oregon Coast" },
+  { slug: "deschutes",  name: "Deschutes",  seat: "Bend",          pop: 207192, court: "Deschutes County Circuit Court", region: "Central Oregon" },
+  { slug: "douglas",    name: "Douglas",    seat: "Roseburg",      pop: 112218, court: "Douglas County Circuit Court",   region: "Southern Oregon" },
+  { slug: "gilliam",    name: "Gilliam",    seat: "Condon",        pop: 1992,   court: "Gilliam County Court",           region: "Eastern Oregon" },
+  { slug: "grant",      name: "Grant",      seat: "Canyon City",   pop: 7115,   court: "Grant County Court",             region: "Eastern Oregon" },
+  { slug: "harney",     name: "Harney",     seat: "Burns",         pop: 7615,   court: "Harney County Court",            region: "Eastern Oregon" },
+  { slug: "hood-river", name: "Hood River", seat: "Hood River",    pop: 24013,  court: "Hood River County Circuit Court",region: "Columbia Gorge" },
+  { slug: "jackson",    name: "Jackson",    seat: "Medford",       pop: 223378, court: "Jackson County Circuit Court",   region: "Southern Oregon" },
+  { slug: "jefferson",  name: "Jefferson",  seat: "Madras",        pop: 24783,  court: "Jefferson County Circuit Court", region: "Central Oregon" },
+  { slug: "josephine",  name: "Josephine",  seat: "Grants Pass",   pop: 88090,  court: "Josephine County Circuit Court", region: "Southern Oregon" },
+  { slug: "klamath",    name: "Klamath",    seat: "Klamath Falls", pop: 70074,  court: "Klamath County Circuit Court",   region: "Southern Oregon" },
+  { slug: "lake",       name: "Lake",       seat: "Lakeview",      pop: 8157,   court: "Lake County Circuit Court",      region: "Eastern Oregon" },
+  { slug: "lane",       name: "Lane",       seat: "Eugene",        pop: 383189, court: "Lane County Circuit Court",      region: "Willamette Valley" },
+  { slug: "lincoln",    name: "Lincoln",    seat: "Newport",       pop: 50395,  court: "Lincoln County Circuit Court",   region: "Oregon Coast" },
+  { slug: "linn",       name: "Linn",       seat: "Albany",        pop: 130440, court: "Linn County Circuit Court",      region: "Willamette Valley" },
+  { slug: "malheur",    name: "Malheur",    seat: "Vale",          pop: 31313,  court: "Malheur County Court",           region: "Eastern Oregon" },
+  { slug: "marion",     name: "Marion",     seat: "Salem",         pop: 348344, court: "Marion County Circuit Court",    region: "Willamette Valley" },
+  { slug: "morrow",     name: "Morrow",     seat: "Heppner",       pop: 12489,  court: "Morrow County Circuit Court",    region: "Eastern Oregon" },
+  { slug: "multnomah",  name: "Multnomah",  seat: "Portland",      pop: 815428, court: "Multnomah County Circuit Court", region: "Portland Metro" },
+  { slug: "polk",       name: "Polk",       seat: "Dallas",        pop: 90075,  court: "Polk County Circuit Court",      region: "Willamette Valley" },
+  { slug: "sherman",    name: "Sherman",    seat: "Moro",          pop: 1858,   court: "Sherman County Court",           region: "Columbia Gorge" },
+  { slug: "tillamook",  name: "Tillamook",  seat: "Tillamook",     pop: 27390,  court: "Tillamook County Circuit Court", region: "Oregon Coast" },
+  { slug: "umatilla",   name: "Umatilla",   seat: "Pendleton",     pop: 80075,  court: "Umatilla County Circuit Court",  region: "Eastern Oregon" },
+  { slug: "union",      name: "Union",      seat: "La Grande",     pop: 26196,  court: "Union County Circuit Court",     region: "Eastern Oregon" },
+  { slug: "wallowa",    name: "Wallowa",    seat: "Enterprise",    pop: 7411,   court: "Wallowa County Circuit Court",   region: "Eastern Oregon" },
+  { slug: "wasco",      name: "Wasco",      seat: "The Dalles",    pop: 26477,  court: "Wasco County Circuit Court",     region: "Columbia Gorge" },
+  { slug: "washington", name: "Washington", seat: "Hillsboro",     pop: 600372, court: "Washington County Circuit Court",region: "Portland Metro" },
+  { slug: "wheeler",    name: "Wheeler",    seat: "Fossil",        pop: 1437,   court: "Wheeler County Court",           region: "Eastern Oregon" },
+  { slug: "yamhill",    name: "Yamhill",    seat: "McMinnville",   pop: 107722, court: "Yamhill County Circuit Court",   region: "Willamette Valley" },
+];
+
+const OREGON_CITIES = [
+  { slug: "portland",    name: "Portland",    county: "Multnomah",  region: "Portland Metro",   pop: 652503, hook: "the largest probate dockets in the state" },
+  { slug: "salem",       name: "Salem",       county: "Marion",     region: "Willamette Valley",pop: 175535, hook: "the capital's complex multi-county estates" },
+  { slug: "eugene",      name: "Eugene",      county: "Lane",       region: "Willamette Valley",pop: 176654, hook: "our home court — Lane County probate" },
+  { slug: "bend",        name: "Bend",        county: "Deschutes",  region: "Central Oregon",   pop: 102059, hook: "Central Oregon's recreation-driven estates" },
+  { slug: "gresham",     name: "Gresham",     county: "Multnomah",  region: "Portland Metro",   pop: 113820, hook: "east Portland Metro probate volume" },
+  { slug: "hillsboro",   name: "Hillsboro",   county: "Washington", region: "Portland Metro",   pop: 109280, hook: "Washington County tech-corridor estates" },
+  { slug: "beaverton",   name: "Beaverton",   county: "Washington", region: "Portland Metro",   pop: 97494,  hook: "west Portland Metro and Nike-corridor families" },
+  { slug: "medford",     name: "Medford",     county: "Jackson",    region: "Southern Oregon",  pop: 86367,  hook: "Rogue Valley estate sales" },
+  { slug: "springfield", name: "Springfield", county: "Lane",       region: "Willamette Valley",pop: 61727,  hook: "Lane County's working-family probate" },
+  { slug: "corvallis",   name: "Corvallis",   county: "Benton",     region: "Willamette Valley",pop: 60876,  hook: "university-town and rural-mid-valley estates" },
+  { slug: "albany",      name: "Albany",      county: "Linn",       region: "Willamette Valley",pop: 56828,  hook: "Linn County's farm-and-Main-Street estates" },
+  { slug: "tigard",      name: "Tigard",      county: "Washington", region: "Portland Metro",   pop: 54539,  hook: "Washington County's I-5 corridor families" },
+];
+
+const SERVICES = [
+  {
+    slug: "cash-offer",
+    title: "Cash Buyer Network",
+    short: "Vetted investors. 24-hour offers. Close in days, not months.",
+    icon: "cash",
+    headline: "When you need to close the file, not court the market.",
+    body: "We maintain a private bench of pre-approved local cash buyers, regional investment groups, and national REITs. Send us the address — we'll have offers in your hand within 24 hours, often above auction floor, with proof of funds attached. No financing contingencies, no appraisal gap, no surprise repair credits at the eleventh hour. For executors who need to close the estate file and distribute, this is the cleanest exit on the board.",
+    benefits: [
+      "Offers within 24 hours, often multiple",
+      "Proof of funds on every offer — no flake risk",
+      "Close in 7–14 days, cash, as-is",
+      "No staging, no showings, no open houses",
+      "Investors absorb the cleanout and the deferred maintenance",
+    ],
+    fit: "Best when: the estate needs liquidity fast, the heirs live out of state, the property needs significant work, or family dynamics make a traditional listing combustible.",
+  },
+  {
+    slug: "market-listing",
+    title: "Strategic Market Listing",
+    short: "Aggressive, intelligent exposure when maximum price is the brief.",
+    icon: "list",
+    headline: "Probate properties priced wrong leave six figures on the table. We don't.",
+    body: "When the goal is the highest defensible price the market will bear, we run a calibrated listing engagement. That means a CPRES-led pricing model, professional photography and 3D walk-throughs, surgical pre-listing prep against probate budget constraints, attorney-aware contract terms, and aggressive multi-channel marketing — local MLS, Pacific Northwest investor lists, and our coastal-California buyer pipeline who routinely pay 4–7% over local comps.",
+    benefits: [
+      "Certified Probate Real Estate Specialist (CPRES) pricing",
+      "Professional photography, drone, and 3D tour",
+      "Pre-listing prep coordinated with vendor partners",
+      "Attorney-coordinated contracts and contingencies",
+      "Aggressive marketing — local + investor + out-of-state buyer lists",
+    ],
+    fit: "Best when: there's time on the estate timeline, the property shows well or can be made to, and the heirs prioritize net proceeds over speed.",
+  },
+  {
+    slug: "estate-cleanout",
+    title: "Estate Cleanout",
+    short: "Vetted contractors, estate sale partners, donation logistics.",
+    icon: "broom",
+    headline: "From hoarder house to MLS-ready in days, not weekends.",
+    body: "Most estates are buried under decades of belongings before they ever see a contract. Our vendor bench — bonded estate-sale operators, licensed haulers, donation channels with documentation for the estate tax return, and trauma-cleanup specialists when needed — turns a property from \"don't open that closet\" to \"ready for offers\" without you ever flying in to manage it. We provide line-item itemization for the estate accounting, and our vendors stage and donate where it makes financial sense.",
+    benefits: [
+      "Bonded, licensed, insured cleanout crews",
+      "Estate sale partners — heirloom triage before the dumpster",
+      "Documented charitable donations for the estate return",
+      "Trauma cleanup and biohazard remediation when needed",
+      "Itemized invoicing for the probate accounting",
+    ],
+    fit: "Best when: the property contains 20+ years of belongings, heirs live out of state, or the family lacks the bandwidth or stomach to do it themselves.",
+  },
+  {
+    slug: "vacant-property-watch",
+    title: "Vacant Property Watch",
+    short: "Weekly checks, freeze prevention, insurance compliance.",
+    icon: "shield",
+    headline: "An empty probate house is the most expensive thing on the estate.",
+    body: "Vacant homes leak — literally and financially. Frozen pipes, squatters, lapsed insurance, code violations, and missed mail piling up in the box. Our weekly check-in service handles HVAC monitoring in winter, exterior walks, photo logs delivered to the executor, lawn and snow management, and coordination with the insurer's vacant-property endorsement so coverage doesn't quietly collapse mid-probate.",
+    benefits: [
+      "Weekly site visits with timestamped photo logs",
+      "Winterization and freeze prevention",
+      "Insurance vacant-property endorsement coordination",
+      "Squatter and code-violation early warning",
+      "Mail forwarding and notice routing",
+    ],
+    fit: "Best when: probate is expected to run 6+ months, heirs live out of state, or the property sits through an Oregon winter unattended.",
+  },
+  {
+    slug: "heir-locator",
+    title: "Heir Locator & Vendor Network",
+    short: "Find missing heirs. Vet every vendor. Coordinate the whole bench.",
+    icon: "compass",
+    headline: "The estate doesn't close until everyone is found and everything is documented.",
+    body: "Half of probate delays come from heirs who can't be located and vendors who fall through. We work with licensed forensic genealogists and skip-tracers to locate missing heirs to the standard Oregon probate courts accept, and we maintain a vetted bench of elder-law attorneys, estate planners, title officers, 1031 facilitators, contractors, handymen, estate-sale houses, and 24-hour locksmiths. One coordinated team, one point of contact, one weekly digest to the executor.",
+    benefits: [
+      "Licensed forensic heir location",
+      "Vetted elder-law and estate-planning attorney network",
+      "Title, escrow, and 1031 partners statewide",
+      "Contractor, handyman, locksmith, and trauma-clean bench",
+      "Weekly executor digest — one inbox, one update",
+    ],
+    fit: "Best when: heirs are missing or estranged, the executor lives out of state, or the estate touches multiple counties and disciplines.",
+  },
+  {
+    slug: "advisory",
+    title: "Executor Advisory",
+    short: "Hourly strategic counsel without locking in a listing.",
+    icon: "compass-2",
+    headline: "Sometimes you don't need an agent. You need a sounding board.",
+    body: "Not every estate needs a full listing engagement. Sometimes the executor just needs a Certified Probate Real Estate Specialist on speed-dial — to price-check an offer, decode a court order, push back on a vendor quote, or pressure-test a sibling's plan. Our hourly advisory engagement gives you that. No retainer, no listing obligation, just expert eyes when the stakes spike.",
+    benefits: [
+      "Hourly advisory — no listing commitment",
+      "Offer analysis and counter-strategy",
+      "Vendor quote audits",
+      "Family-dynamics neutral third-party briefings",
+      "Court-order plain-English translation",
+    ],
+    fit: "Best when: the executor is competent and engaged, the listing path is already chosen, but they want a probate-specialist insurance policy on key decisions.",
+  },
+];
+
+const TEAM = [
+  {
+    slug: "dan-gandee",
+    name: "Daniel Gandee",
+    role: "Co-Founder · Certified Probate Real Estate Specialist",
+    short: "CPRES · RENE · CIPS · CEOA",
+    photo: "headshot-dan-gandee.webp",
+    bio: [
+      "Dan Gandee is the operative who built this team to do one thing — handle Oregon probate real estate with the precision, compassion, and speed the families who need us deserve.",
+      "Originally trained in advertising at Kent State University, Dan brought a marketer's eye for narrative and pricing to a corner of real estate most agents avoid: the messy, time-sensitive, emotionally loaded work of liquidating estate, trust, and conservatorship property. He earned the Certified Probate Real Estate Specialist (CPRES), Real Estate Negotiation Expert (RENE), Certified International Property Specialist (CIPS), and Certified Express Offers Agent (CEOA) designations to back the practice with credentials no general agent carries.",
+      "When he isn't in court files or vendor calls, you'll find Dan on a Lane County trail, building the team's vendor bench one cup of coffee at a time, or shepherding an out-of-state heir through their first Oregon probate.",
+    ],
+    creds: ["CPRES — Certified Probate Real Estate Specialist", "RENE — Real Estate Negotiation Expert", "CIPS — Certified International Property Specialist", "CEOA — Certified Express Offers Agent", "B.S. Advertising, Kent State University"],
+    quote: "We don't sell houses. We close estate files. The property is just the lever.",
+    territory: "Statewide Oregon · Anchored in Eugene & Lane County",
+  },
+  {
+    slug: "ed-zulyevic",
+    name: "Edward Zulyevic",
+    role: "Co-Founder · Operations & Vendor Network",
+    short: "Special Ops · Vendor Bench · Logistics",
+    photo: "headshot-ed-zulyevic.webp",
+    photoMissing: true,
+    bio: [
+      "Ed Zulyevic runs the operational engine of The Operative Group — the vetted vendor bench, the field logistics, and the weekly executor digest that keeps eight moving pieces from becoming twenty.",
+      "Before co-founding the team, Ed cut his teeth coordinating multi-trade rehabs and investor turnarounds across Oregon and California. He brought that same triage instinct to probate: assemble the right specialists, sequence them correctly, document everything, and ship the property across the finish line on time and on budget.",
+      "Executors who work with Ed describe the same relief: \"I stopped getting woken up at 3 a.m. wondering if the pipes had burst.\"",
+    ],
+    creds: ["Real Estate Broker, Oregon (REAL Broker LLC)", "Multi-trade renovation coordination — 100+ projects", "Vendor-bench architect for The Operative Group"],
+    quote: "Probate is a logistics problem dressed up as a legal problem. Solve the logistics and the rest follows.",
+    territory: "Statewide Oregon · Specializes in coastal & multi-county estates",
+  },
+];
+
+const TESTIMONIALS = [
+  {
+    quote: "My father lived in Roseburg, I live in Boston, and the house was full of forty years of belongings. Dan and Ed handled everything. I flew out for the closing and that was it.",
+    name: "K. Mercer",
+    where: "Out-of-state executor · Douglas County",
+  },
+  {
+    quote: "We got two cash offers within twenty-four hours and closed in nine days. The court approved the sale at the next hearing. I genuinely don't know how any of this would have happened without them.",
+    name: "S. Whitfield",
+    where: "Personal representative · Lane County",
+  },
+  {
+    quote: "Our probate attorney recommended them and I understand why. They speak the court's language, they document everything for the accounting, and they don't flinch at family complications.",
+    name: "R. Patel",
+    where: "Trustee · Multnomah County",
+  },
+  {
+    quote: "I interviewed three agents. Dan was the only one who asked when the next hearing was and offered to read the order. That's when I knew.",
+    name: "J. Holloway",
+    where: "Executor · Deschutes County",
+  },
+  {
+    quote: "They saved us from a buyer who tried to renegotiate after appraisal. Ed had a backup cash offer in our hands the next morning at a higher price. I have no idea how he did it.",
+    name: "A. Lindgren",
+    where: "Co-executor · Washington County",
+  },
+  {
+    quote: "Compassionate. That's the word my mother used. After my brother died she said meeting Dan was the first thing that felt okay in a month.",
+    name: "M. Castellanos",
+    where: "Heir · Jackson County",
+  },
+];
+
+const FAQ = [
+  { q: "Do I need to wait for probate to close before listing the property?", a: "In Oregon, no — and in most cases waiting is the wrong move. Once the personal representative is appointed (Letters Testamentary or Letters of Administration issued), the property can be listed and even contracted for sale. The closing typically waits for the court's confirmation or for the personal representative's authority to be sufficient under the will, but the marketing window can open immediately. Acting early protects the estate from carrying-cost drag — vacant insurance, utilities, lawn, property tax, and seasonal damage all run while the file sits." },
+  { q: "How long does Oregon probate take?", a: "Most Oregon probates run between 4 and 12 months. Small estates under $200,000 in personal property and $200,000 in real property may qualify for a simplified affidavit procedure that closes in 30 days. Complex estates with contested wills, missing heirs, or interstate property routinely run 12 to 24 months. The real estate sale is rarely the bottleneck — heir notification and creditor periods usually are." },
+  { q: "Do you only work with attorneys, or can heirs call you directly?", a: "Both. Many of our calls come from probate attorneys who hand us the real estate piece so they can focus on the legal work. Just as many come directly from personal representatives, executors, trustees, and heirs who need a real estate specialist before they hire counsel. If you don't have an attorney yet, we'll refer you to two or three vetted probate attorneys in your county and stay out of the legal lane." },
+  { q: "What does it cost to work with The Operative Group?", a: "A traditional listing engagement is paid via commission at closing, structured exactly like any standard Oregon real estate sale. There is no upfront fee, no retainer, and no charge if the property doesn't sell. Hourly advisory engagements (for executors who don't need a full listing) are billed at our standard advisory rate, capped per engagement so you never get a surprise invoice. Cleanout, vendor coordination, and vacant-property watch are billed at the vendor's actual cost plus a transparent coordination fee disclosed in writing before any work begins." },
+  { q: "We need cash fast. How fast is fast?", a: "Twenty-four hours to first offer. Seven to fourteen days to close. We've closed Lane County properties in nine days from accepted offer to deed recorded. That speed only matters if the offer is real — which is why every cash buyer on our bench is pre-approved, with verifiable proof of funds attached to the offer. No \"I'll get the money lined up after court approval\" hopium." },
+  { q: "Can you handle out-of-state heirs?", a: "About sixty percent of our clients live outside Oregon. We handle remote notarization where the state allows it, coordinate hand-off logistics for keys and personal property, send weekly executor digests, and run the whole transaction with one point of contact. Most of our out-of-state heirs visit the property zero or one times during the engagement." },
+  { q: "What if the heirs don't agree on what to do with the property?", a: "Family disagreement is one of the most common probate situations we walk into, not the rarest. We default to total transparency — every offer, every comp, every contractor quote shared with every named party in writing — and we let the personal representative make the call with the court's authority. Where we can, we propose a buy-out structure that lets one heir take the property and the others receive their share in cash. Where we can't, we follow the PR's direction and document every decision." },
+  { q: "Do you only sell properties? What about properties heirs want to keep?", a: "If an heir wants to keep the property and has the means to do so, our job is to help them buy out the other heirs cleanly. We provide the valuation, document the comps for the court, help structure the buy-out (often via a refinance or 1031), and coordinate the title work. Sometimes the best probate outcome is no sale at all." },
+];
+
+module.exports = { OREGON_COUNTIES, OREGON_CITIES, SERVICES, TEAM, TESTIMONIALS, FAQ };
