@@ -82,15 +82,16 @@
 
   /* ---------- Intake form → Supabase webhook ----------
      The webhook function lives behind Supabase's gateway, which requires
-     an Authorization: Bearer <publishable-key> header. The publishable
-     key is safe to expose in client JS — it only grants invocation of
-     functions that themselves enforce their own auth (in our case the
-     X-Webhook-Key header for team routing). */
+     an Authorization: Bearer <publishable-key> header (publishable key
+     is safe to expose in client JS). The team-routing webhook key is
+     passed via ?key= URL param — using a custom X-Webhook-Key header
+     would require the function's CORS Allow-Headers list to include
+     that header, which it doesn't (and we don't control deploy). */
   const intake = document.getElementById("intakeForm");
   if (intake) {
-    const WEBHOOK_BASE = "https://ayskxkjorhoaknkqtyvm.supabase.co/functions/v1/webhook-receive";
     const WEBHOOK_KEY = "e3302b5d21fc46979aacd6da8576642f";
     const PUBLISHABLE = "sb_publishable_i1rp2I2Sk5CpubqIu4MqQw_nzNRqwOl";
+    const WEBHOOK = "https://ayskxkjorhoaknkqtyvm.supabase.co/functions/v1/webhook-receive?key=" + encodeURIComponent(WEBHOOK_KEY);
     const status = document.getElementById("intakeStatus");
 
     function showStatus(msg, ok) {
@@ -135,13 +136,12 @@
       btn.disabled = true;
       btn.innerHTML = "Sending… <span class=\"arrow\">↗</span>";
       try {
-        const res = await fetch(WEBHOOK_BASE, {
+        const res = await fetch(WEBHOOK, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + PUBLISHABLE,
             "apikey": PUBLISHABLE,
-            "X-Webhook-Key": WEBHOOK_KEY,
           },
           body: JSON.stringify(payload),
         });
