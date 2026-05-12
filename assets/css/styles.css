@@ -630,7 +630,7 @@ section.flush   { padding: 0; }
 .wrap-flex { flex-wrap: wrap; } .full-width { width: 100%; }
 
 /* ---------- Hide showy effects from prior pass ---------- */
-.marquee, .velocity, .aurora, .threads, .bento, .mosaic, .logo-loop { display: none !important; }
+.marquee, .velocity, .aurora, .threads, .mosaic, .logo-loop { display: none !important; }
 .shiny, .shiny-paper, .grad-text { background: none !important; -webkit-background-clip: unset !important; background-clip: unset !important; color: inherit !important; animation: none !important; }
 .tilt { transform: none !important; }
 .pull-quote { font-family: var(--display); font-style: italic; font-size: clamp(28px, 3.4vw, 44px); line-height: 1.25; color: var(--ink); border-left: 2px solid var(--sage); padding: 6px 0 6px 24px; font-variation-settings: "opsz" 72; }
