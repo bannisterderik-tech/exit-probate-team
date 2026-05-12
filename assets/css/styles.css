@@ -713,6 +713,16 @@ section.flush   { padding: 0; }
 main { animation: fadeIn 600ms var(--ease-out) both; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+/* Safety: ensure footer is always visible regardless of animation state */
+.site-footer { opacity: 1 !important; transform: none !important; }
+.site-footer .reveal, .site-footer .reveal-fade { opacity: 1 !important; transform: none !important; }
+
+/* Fallback: if GSAP hasn't triggered after 4s, show all hidden elements */
+@keyframes revealFallback { to { opacity: 1; transform: none; } }
+.js-anim .reveal, .js-anim .reveal-fade, .js-anim .reveal-img {
+  animation: revealFallback 0s 4s both;
+}
+
 /* ---------- Image hover — gentler ---------- */
 .frame img { transition: transform 2s var(--ease-out); }
 .frame:hover img { transform: scale(1.02); }
@@ -765,7 +775,7 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
   letter-spacing: -0.024em;
   margin-top: 28px;
 }
-.hero-editorial .lede { margin-top: 36px; max-width: 50ch; font-size: clamp(18px, 1.5vw, 22px); }
+.hero-editorial .lede { margin-top: 36px; max-width: 50ch; font-size: clamp(18px, 1.5vw, 22px); color: var(--ink-soft); }
 .hero-editorial .hero-photo {
   position: relative;
   align-self: stretch;
@@ -777,7 +787,12 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
 .hero-editorial .hero-photo img {
   width: 100%; height: 100%; object-fit: cover;
   min-height: 540px;
-  filter: saturate(0.94) contrast(1.02);
+  filter: saturate(0.88) contrast(1.04) brightness(0.96);
+}
+.hero-editorial .hero-photo::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(28,27,23,0.06) 0%, rgba(28,27,23,0) 30%, rgba(28,27,23,0.1) 100%);
+  pointer-events: none;
 }
 .hero-editorial .hero-photo .badge {
   position: absolute; top: 24px; left: 24px;
@@ -884,7 +899,7 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
 }
 .audience-card .num {
   font-family: var(--display); font-style: italic;
-  font-size: 14px; letter-spacing: 0.02em; color: var(--sage-deep);
+  font-size: 14px; letter-spacing: 0.02em; color: var(--forest);
 }
 .audience-card h3 { font-size: clamp(22px, 2vw, 28px); font-variation-settings: "opsz" 48; line-height: 1.15; }
 .audience-card p { color: var(--ink-soft); font-size: 16px; line-height: 1.62; }
@@ -928,8 +943,8 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
   margin-top: clamp(32px, 4vw, 56px);
   display: flex; align-items: center; gap: 18px;
   font-family: var(--display); font-style: italic;
-  letter-spacing: 0.06em; text-transform: uppercase; font-size: 12px;
-  color: rgba(253,250,243,0.7);
+  letter-spacing: 0.01em; text-transform: none; font-size: 15px;
+  color: rgba(253,250,243,0.6);
 }
 .pull-quote .attr .dash { width: 48px; height: 1px; background: rgba(253,250,243,0.4); }
 
@@ -972,7 +987,7 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
 .bento .tile.has-photo:hover .ph img { transform: scale(1.04); }
 .bento .tile.has-photo > .ph::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(28,27,23,0) 28%, rgba(28,27,23,0.75) 100%);
+  background: linear-gradient(180deg, rgba(28,27,23,0.08) 0%, rgba(28,27,23,0.4) 40%, rgba(28,27,23,0.82) 100%);
 }
 .bento .tile.has-photo .inner {
   margin-top: auto; padding: clamp(24px, 2.8vw, 40px);
@@ -982,24 +997,24 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
   font-family: var(--display); font-style: italic; font-size: 13px;
   color: var(--sage-deep); letter-spacing: 0.01em;
 }
-.bento .tile.has-photo .eye { color: var(--sage); }
+.bento .tile.has-photo .eye { color: rgba(148,167,136,0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
 .bento .tile h3 {
   font-size: clamp(22px, 2.2vw, 32px);
   font-variation-settings: "opsz" 48;
   line-height: 1.1; letter-spacing: -0.006em;
 }
-.bento .tile.has-photo h3 { color: var(--paper); }
+.bento .tile.has-photo h3 { color: var(--paper); text-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.2); }
 .bento .tile p {
   color: var(--ink-soft); font-size: 15px; line-height: 1.55;
   max-width: 38ch;
 }
-.bento .tile.has-photo p { color: rgba(253,250,243,0.84); }
+.bento .tile.has-photo p { color: rgba(253,250,243,0.92); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
 .bento .tile .arrow-link {
   font-family: var(--display); font-style: italic; font-size: 14px; color: var(--ink);
   display: inline-flex; align-items: center; gap: 8px;
   margin-top: 8px;
 }
-.bento .tile.has-photo .arrow-link { color: var(--paper); }
+.bento .tile.has-photo .arrow-link { color: var(--paper); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
 @media (max-width: 980px) {
   .bento { grid-template-columns: repeat(4, 1fr); }
   .bento .tile.span-3 { grid-column: span 4; }
@@ -1058,7 +1073,7 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
   font-size: clamp(36px, 4vw, 56px);
   font-weight: 320;
   font-style: italic;
-  color: var(--sage-deep);
+  color: var(--forest);
   line-height: 1;
   letter-spacing: -0.02em;
 }
@@ -1158,7 +1173,7 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
 }
 .testimonial-grid figcaption .ini {
   width: 36px; height: 36px; border-radius: 50%;
-  background: var(--sage-deep); color: var(--paper);
+  background: var(--forest); color: var(--paper);
   display: grid; place-items: center;
   font-family: var(--display); font-style: italic; font-size: 13px;
   font-variation-settings: "opsz" 14;
@@ -1225,8 +1240,8 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
   font-family: var(--display); font-variation-settings: "opsz" 36;
   font-size: clamp(24px, 2.4vw, 36px);
   letter-spacing: -0.01em;
-  color: var(--ink);
-  font-weight: 380;
+  color: var(--forest);
+  font-weight: 420;
 }
 .cred-strip .cred .v {
   font-family: var(--display); font-style: italic;
@@ -1308,6 +1323,12 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
   padding: clamp(80px, 10vw, 140px) 0;
   position: relative;
   overflow: hidden;
+}
+.cta-noir::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 60%, rgba(94,110,81,0.1) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(164,113,88,0.06) 0%, transparent 50%);
+  pointer-events: none;
 }
 .cta-noir .grid {
   display: grid; grid-template-columns: 7fr 5fr;
@@ -1408,7 +1429,7 @@ main { animation: fadeIn 600ms var(--ease-out) both; }
 .section-head .num {
   font-family: var(--display); font-variation-settings: "opsz" 36;
   font-style: italic; font-size: clamp(36px, 4vw, 56px);
-  color: var(--ink-faint);
+  color: var(--sage);
   line-height: 1;
 }
 @media (max-width: 880px) {
