@@ -21,17 +21,17 @@ const IMG = {
 
   /* Oregon landscape */
   landscape:    U("1506905925346-21bda4d32df4", 2000),
-  coast:        U("1465311354263-0c8d89c2a006"),
+  coast:        U("1498855926480-d98e83099315"),
   forest:       U("1448375240586-882707db888b"),
-  river:        U("1502536757039-9e6a85e74e6e"),
+  river:        U("1441974231531-c6227db76b6e"),
   rural:        U("1500382017468-9049fed747ef"),
   mountains:    U("1464822759023-fed622ff2c3b", 2000),
   valley:       U("1502301197179-65228ab57f78"),
 
   /* People — elderly + multi-generation (humane) */
-  elderlyCouple:  U("1516733725897-1aa73b1e1da2"),
+  elderlyCouple:  U("1746192703468-dedf3fc11d87"),
   elderlyHands:   U("1559963110-71b394e7494d"),
-  elderlyWoman:   U("1581579188871-45ea61f2a0c8"),
+  elderlyWoman:   U("1566616213894-2d4e1baee5d8"),
   elderlyMan:     U("1547425260-76bcadfb4f2c"),
   matureCouple:   U("1573497019940-1c28c88b4f3e"),
   grandparent:    U("1497316730643-415fac54a2af"),
@@ -46,7 +46,7 @@ const IMG = {
   handsBook:     U("1481627834876-b7833e8f5570"),
   handsCoffee:   U("1509042239860-f550ce710b93"),
   kitchen:       U("1556909114-f6e7ad7d3136"),
-  kitchenWarm:   U("1556909195-32fa55a3b3c5"),
+  kitchenWarm:   U("1507089947368-19c1da9775ae"),
 
   /* Probate-adjacent details */
   papers:    U("1450101499163-c8848c66ca85"),
@@ -57,7 +57,7 @@ const IMG = {
   signing:   U("1450101499163-c8848c66ca85"),
 
   /* Heirlooms / objects */
-  album:        U("1531737212413-d04dec8a0bf3"),
+  album:        U("1504439468489-c8920d796a29"),
   clock:        U("1565538810643-b5bdb714032a"),
   vintage:      U("1557804506-669a67965ba0"),
   bookshelf:    U("1521587760476-6c12a4b040da"),
