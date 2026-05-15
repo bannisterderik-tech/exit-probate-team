@@ -15,14 +15,14 @@ function about() {
       description: "The story, the standards, and the operational philosophy behind Oregon's only fully probate-specialized real estate team. Co-founded by Daniel Gandee and Edward Zulyevic at REAL Brokerage.",
       ogImage: IMG.meeting,
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "About", href: "https://exitprobateteam.com/pages/about.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "About", href: "https://oregonprobateagent.com/pages/about.html" },
       ],
       jsonLd: {
         "@context": "https://schema.org",
         "@type": "AboutPage",
         name: "About The Operative Group",
-        url: "https://exitprobateteam.com/pages/about.html",
+        url: "https://oregonprobateagent.com/pages/about.html",
       },
     },
     body: `
@@ -134,8 +134,8 @@ function servicesOverview() {
       title: "Services — Oregon Probate Real Estate",
       description: "Six coordinated services for Oregon probate real estate: cash buyer network, strategic market listing, estate cleanout, vacant property watch, heir location and vendor coordination, and executor advisory.",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Services", href: "https://exitprobateteam.com/pages/services.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Services", href: "https://oregonprobateagent.com/pages/services.html" },
       ],
       jsonLd: {
         "@context": "https://schema.org",
@@ -145,7 +145,7 @@ function servicesOverview() {
           position: i + 1,
           name: s.title,
           description: s.short,
-          url: `https://exitprobateteam.com/pages/services/${s.slug}.html`,
+          url: `https://oregonprobateagent.com/pages/services/${s.slug}.html`,
           provider: { "@type": "LocalBusiness", name: "The Operative Group" },
           areaServed: { "@type": "State", name: "Oregon" },
         })),
@@ -210,8 +210,8 @@ function process() {
       title: "Our Process — Six-Step Probate File Protocol",
       description: "The exact six-step protocol we run on every Oregon probate real estate engagement, from intake to file close. Predictable process equals predictable outcomes.",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Process", href: "https://exitprobateteam.com/pages/process.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Process", href: "https://oregonprobateagent.com/pages/process.html" },
       ],
       jsonLd: {
         "@context": "https://schema.org",
@@ -296,8 +296,8 @@ function team() {
       title: "Team — The Operative Group",
       description: "Meet the operatives behind Oregon's only fully probate-specialized real estate team. Co-founders Daniel Gandee (CPRES) and Edward Zulyevic.",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Team", href: "https://exitprobateteam.com/pages/team.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Team", href: "https://oregonprobateagent.com/pages/team.html" },
       ],
     },
     body: `
@@ -370,15 +370,15 @@ function contact() {
     outPath: "pages/contact.html",
     meta: {
       title: "Contact — Start the Conversation",
-      description: "Reach the Exit Probate Team. Call (541) 525-3268, email hello@exitprobateteam.com, or send the estate details through the secure intake form. 30-minute consultation, no retainer, no pressure.",
+      description: "Reach the Oregon Probate Agent. Call (541) 525-3268, email hello@oregonprobateagent.com, or send the estate details through the secure intake form. 30-minute consultation, no retainer, no pressure.",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Contact", href: "https://exitprobateteam.com/pages/contact.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Contact", href: "https://oregonprobateagent.com/pages/contact.html" },
       ],
       jsonLd: {
         "@context": "https://schema.org",
         "@type": "ContactPage",
-        url: "https://exitprobateteam.com/pages/contact.html",
+        url: "https://oregonprobateagent.com/pages/contact.html",
       },
     },
     body: `
@@ -402,7 +402,7 @@ function contact() {
             <h3 style="color: var(--paper); margin-top: 18px;">We answer our own phones.</h3>
             <div class="mt-12" style="display: flex; flex-direction: column; gap: 18px;">
               <a href="tel:+15415253268" style="color: var(--paper); font-family: var(--display); font-size: 32px; letter-spacing: -0.01em; text-decoration: none;">(541) 525-3268</a>
-              <a href="mailto:hello@exitprobateteam.com" style="color: var(--paper); font-family: var(--serif); font-size: 18px;">hello@exitprobateteam.com</a>
+              <a href="mailto:hello@oregonprobateagent.com" style="color: var(--paper); font-family: var(--serif); font-size: 18px;">hello@oregonprobateagent.com</a>
               <div style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(253,250,243,0.55); margin-top: 6px;">Eugene · Oregon · Statewide coverage</div>
             </div>
             <div class="mt-12" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px;">
@@ -461,7 +461,7 @@ function contact() {
         <p class="lede">We take referrals from probate, trust, and elder-law attorneys statewide. Our weekly executor digests are CC'd to counsel by default. Reach out through your normal channels or call us direct.</p>
         <div class="btn-row">
           <a href="tel:+15415253268" class="btn btn-accent" data-magnetic>Call us directly <span class="arrow">→</span></a>
-          <a href="mailto:hello@exitprobateteam.com" class="btn btn-ghost" style="color: var(--paper); border-color: rgba(255,255,255,0.3);">Email attorney intake</a>
+          <a href="mailto:hello@oregonprobateagent.com" class="btn btn-ghost" style="color: var(--paper); border-color: rgba(255,255,255,0.3);">Email attorney intake</a>
         </div>
       </div>
     </div>
@@ -478,8 +478,8 @@ function faq() {
       title: "FAQ — Oregon Probate Real Estate Answers",
       description: "Direct answers to the questions executors, trustees, and heirs actually ask in their first Oregon probate real estate call. No legalese, no filler.",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "FAQ", href: "https://exitprobateteam.com/pages/faq.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "FAQ", href: "https://oregonprobateagent.com/pages/faq.html" },
       ],
       jsonLd: {
         "@context": "https://schema.org",
@@ -528,8 +528,8 @@ function testimonials() {
       title: "Testimonials — Executors, Attorneys, and Heirs",
       description: "Voices from the file — Oregon executors, probate attorneys, and heirs who worked with The Operative Group through the most time-sensitive moments of their estate.",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Testimonials", href: "https://exitprobateteam.com/pages/testimonials.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Testimonials", href: "https://oregonprobateagent.com/pages/testimonials.html" },
       ],
     },
     body: `

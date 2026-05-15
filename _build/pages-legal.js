@@ -12,8 +12,8 @@ function legalPage({ slug, title, sub, body }) {
       title,
       description: sub,
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: title, href: `https://exitprobateteam.com/pages/legal/${slug}.html` },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: title, href: `https://oregonprobateagent.com/pages/legal/${slug}.html` },
       ],
     },
     body: `
@@ -53,13 +53,13 @@ const PAGES = [
       <h2>How we store it</h2>
       <p>Engagement records are stored on the brokerage's secure document management system, which is industry-standard for real estate transactions. We retain records for the period required by Oregon real estate regulations and as required to support the estate accounting; we do not retain personal information beyond what is necessary.</p>
       <h2>Your rights</h2>
-      <p>You can request a copy of the information we hold about you, request correction, or request deletion subject to our regulatory retention obligations, by emailing <a href="mailto:hello@exitprobateteam.com">hello@exitprobateteam.com</a>.</p>
+      <p>You can request a copy of the information we hold about you, request correction, or request deletion subject to our regulatory retention obligations, by emailing <a href="mailto:hello@oregonprobateagent.com">hello@oregonprobateagent.com</a>.</p>
       <h2>Children</h2>
       <p>This site is not directed to children under thirteen. We do not knowingly collect information from anyone under thirteen.</p>
       <h2>Changes</h2>
       <p>If we update this policy materially, we'll post the updated version on this page with a revised effective date. Continued use of this site after material changes constitutes acceptance.</p>
       <h2>Contact</h2>
-      <p>Questions about this policy: <a href="mailto:hello@exitprobateteam.com">hello@exitprobateteam.com</a> or (541) 525-3268.</p>
+      <p>Questions about this policy: <a href="mailto:hello@oregonprobateagent.com">hello@oregonprobateagent.com</a> or (541) 525-3268.</p>
     `,
   },
   {
@@ -85,7 +85,7 @@ const PAGES = [
       <h2>Governing law</h2>
       <p>These terms are governed by the laws of the State of Oregon, without regard to its conflict of laws principles.</p>
       <h2>Contact</h2>
-      <p>Questions about these terms: <a href="mailto:hello@exitprobateteam.com">hello@exitprobateteam.com</a>.</p>
+      <p>Questions about these terms: <a href="mailto:hello@oregonprobateagent.com">hello@oregonprobateagent.com</a>.</p>
     `,
   },
   {
@@ -100,7 +100,7 @@ const PAGES = [
       <h2>What we know we still need to improve</h2>
       <p>We treat accessibility as a continuous practice, not a one-time audit. If you encounter any barrier on this site — anything that prevents you from reading, navigating, or accessing the information you need — we want to know about it directly.</p>
       <h2>How to reach us</h2>
-      <p>Email <a href="mailto:hello@exitprobateteam.com">hello@exitprobateteam.com</a> with a description of the issue and the page you encountered it on. We respond within one business day and typically resolve within one to two weeks depending on complexity.</p>
+      <p>Email <a href="mailto:hello@oregonprobateagent.com">hello@oregonprobateagent.com</a> with a description of the issue and the page you encountered it on. We respond within one business day and typically resolve within one to two weeks depending on complexity.</p>
       <p>Alternative formats: any content on this site is available in plain-text, large-print, or read-aloud format by request. Call (541) 525-3268 and we'll walk you through it directly.</p>
     `,
   },

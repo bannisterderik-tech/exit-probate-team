@@ -176,16 +176,16 @@ section.flush   { padding: 0; }
 }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { display: flex; align-items: center; gap: 14px; }
-.brand-mark {
-  width: 36px; height: 36px; display: grid; place-items: center;
-  border: 1px solid var(--rule); border-radius: 6px;
-  background: var(--paper);
+.brand-logo {
+  display: block;
+  height: 44px;
+  width: auto;
+  max-width: min(420px, 60vw);
+  object-fit: contain;
 }
-.brand-mark svg { width: 18px; height: 18px; }
-.brand-mark svg path { stroke: var(--brand); }
-.brand-name { display: flex; flex-direction: column; line-height: 1.1; }
-.brand-name .name { font-family: var(--display); font-weight: 380; font-size: 18px; letter-spacing: -0.01em; }
-.brand-name .sub { font-family: var(--display); font-style: italic; font-size: 12px; color: var(--ink-mute); margin-top: 2px; }
+@media (max-width: 720px) {
+  .brand-logo { height: 36px; max-width: 56vw; }
+}
 
 .nav-links { display: flex; align-items: center; gap: 2px; }
 .nav-links a {

@@ -32,9 +32,9 @@ function countyPage(c) {
       ogImage: tone.img,
       geoPlace: `${c.name} County, Oregon`,
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Coverage", href: "https://exitprobateteam.com/pages/counties/index.html" },
-        { label: `${c.name} County`, href: `https://exitprobateteam.com/pages/counties/${c.slug}.html` },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Coverage", href: "https://oregonprobateagent.com/pages/counties/index.html" },
+        { label: `${c.name} County`, href: `https://oregonprobateagent.com/pages/counties/${c.slug}.html` },
       ],
       jsonLd: [
         {
@@ -44,7 +44,7 @@ function countyPage(c) {
           provider: { "@type": "LocalBusiness", name: "The Operative Group", telephone: "+15415253268" },
           areaServed: { "@type": "AdministrativeArea", name: `${c.name} County, Oregon` },
           serviceType: "Probate, trust, and conservatorship real estate liquidation",
-          url: `https://exitprobateteam.com/pages/counties/${c.slug}.html`,
+          url: `https://oregonprobateagent.com/pages/counties/${c.slug}.html`,
         },
         {
           "@context": "https://schema.org",
@@ -201,9 +201,9 @@ function cityPage(c) {
       ogImage: tone.img,
       geoPlace: `${c.name}, Oregon`,
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Coverage", href: "https://exitprobateteam.com/pages/counties/index.html" },
-        { label: c.name, href: `https://exitprobateteam.com/pages/cities/${c.slug}.html` },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Coverage", href: "https://oregonprobateagent.com/pages/counties/index.html" },
+        { label: c.name, href: `https://oregonprobateagent.com/pages/cities/${c.slug}.html` },
       ],
       jsonLd: [
         {
@@ -213,7 +213,7 @@ function cityPage(c) {
           provider: { "@type": "LocalBusiness", name: "The Operative Group", telephone: "+15415253268" },
           areaServed: { "@type": "City", name: `${c.name}, Oregon` },
           serviceType: "Probate, trust, and conservatorship real estate",
-          url: `https://exitprobateteam.com/pages/cities/${c.slug}.html`,
+          url: `https://oregonprobateagent.com/pages/cities/${c.slug}.html`,
         },
       ],
     },
@@ -307,8 +307,8 @@ function coverageIndex() {
       title: "Oregon Coverage — All 36 Counties",
       description: "Statewide Oregon probate real estate coverage. Every county, every probate court. Find your county page and start the file in 30 minutes.",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Coverage", href: "https://exitprobateteam.com/pages/counties/index.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Coverage", href: "https://oregonprobateagent.com/pages/counties/index.html" },
       ],
       jsonLd: {
         "@context": "https://schema.org",
@@ -317,7 +317,7 @@ function coverageIndex() {
           "@type": "ListItem",
           position: i + 1,
           name: `${c.name} County, Oregon`,
-          url: `https://exitprobateteam.com/pages/counties/${c.slug}.html`,
+          url: `https://oregonprobateagent.com/pages/counties/${c.slug}.html`,
         })),
       },
     },

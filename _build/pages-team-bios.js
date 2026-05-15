@@ -13,11 +13,11 @@ function bio(m) {
     meta: {
       title: `${m.name} — ${m.role}`,
       description: `${m.name}, ${m.role}. ${m.short}. Co-founder of The Operative Group — Oregon's Certified Probate Real Estate Specialists.`,
-      ogImage: `https://exitprobateteam.com/assets/img/${m.photo}`,
+      ogImage: `https://oregonprobateagent.com/assets/img/${m.photo}`,
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Team", href: "https://exitprobateteam.com/pages/team.html" },
-        { label: m.name, href: `https://exitprobateteam.com/pages/team/${m.slug}.html` },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Team", href: "https://oregonprobateagent.com/pages/team.html" },
+        { label: m.name, href: `https://oregonprobateagent.com/pages/team/${m.slug}.html` },
       ],
       jsonLd: {
         "@context": "https://schema.org",
@@ -25,8 +25,8 @@ function bio(m) {
         name: m.name,
         jobTitle: m.role,
         worksFor: { "@type": "Organization", name: "The Operative Group" },
-        image: `https://exitprobateteam.com/assets/img/${m.photo}`,
-        url: `https://exitprobateteam.com/pages/team/${m.slug}.html`,
+        image: `https://oregonprobateagent.com/assets/img/${m.photo}`,
+        url: `https://oregonprobateagent.com/pages/team/${m.slug}.html`,
         knowsAbout: ["Oregon probate real estate", "Trust property liquidation", "Conservatorship sales"],
         hasCredential: m.creds.map((c) => ({ "@type": "EducationalOccupationalCredential", name: c })),
       },

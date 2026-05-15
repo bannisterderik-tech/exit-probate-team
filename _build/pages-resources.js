@@ -120,9 +120,9 @@ function resourcePage(r) {
       ogImage: r.hero,
       ogType: "article",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Resources", href: "https://exitprobateteam.com/pages/resources/index.html" },
-        { label: r.title, href: `https://exitprobateteam.com/pages/resources/${r.slug}.html` },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Resources", href: "https://oregonprobateagent.com/pages/resources/index.html" },
+        { label: r.title, href: `https://oregonprobateagent.com/pages/resources/${r.slug}.html` },
       ],
       jsonLd: {
         "@context": "https://schema.org",
@@ -131,7 +131,7 @@ function resourcePage(r) {
         description: r.sub,
         image: r.hero,
         author: { "@type": "Organization", name: "The Operative Group" },
-        publisher: { "@type": "Organization", name: "The Operative Group", logo: { "@type": "ImageObject", url: "https://exitprobateteam.com/assets/img/logo.png" } },
+        publisher: { "@type": "Organization", name: "The Operative Group", logo: { "@type": "ImageObject", url: "https://oregonprobateagent.com/assets/img/logo.png" } },
         datePublished: "2026-01-15",
         dateModified: "2026-05-01",
       },
@@ -189,8 +189,8 @@ function resourcesIndex() {
       title: "Resources — Oregon Probate Real Estate Guides",
       description: "Free, in-depth guides for Oregon executors, trustees, and heirs. Probate timelines, selling guides, executor checklists, and the full glossary.",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Resources", href: "https://exitprobateteam.com/pages/resources/index.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Resources", href: "https://oregonprobateagent.com/pages/resources/index.html" },
       ],
     },
     body: `

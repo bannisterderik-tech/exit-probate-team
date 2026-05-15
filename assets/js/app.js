@@ -1,5 +1,5 @@
 /* =====================================================================
-   EXIT PROBATE TEAM — global UI behavior
+   OREGON PROBATE AGENT — global UI behavior
    Header scroll, mobile menu, FAQ, year stamps, progress bar, smooth anchors.
    ===================================================================== */
 (function () {
@@ -136,7 +136,7 @@
         name,
         email,
         phone,
-        source: "exitprobateteam.com — intake form",
+        source: "oregonprobateagent.com — intake form",
         lead_type: inferLeadType(role),
         temperature: "warm",
         city,
@@ -144,7 +144,7 @@
         county,
         notes: notesParts.join("\n\n"),
         tags,
-        how_heard: "Website — exitprobateteam.com",
+        how_heard: "Website — oregonprobateagent.com",
         consent_sms: true,
         consent_email: true,
       };
@@ -170,7 +170,7 @@
         intake.reset();
       } catch (err) {
         console.error("[intake] submission failed:", err);
-        showStatus("Couldn't submit just now — please call (541) 525-3268 or email hello@exitprobateteam.com.", false);
+        showStatus("Couldn't submit just now — please call (541) 525-3268 or email hello@oregonprobateagent.com.", false);
       } finally {
         btn.disabled = false;
         btn.innerHTML = original;

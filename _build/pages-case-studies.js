@@ -94,9 +94,9 @@ function casePage(c) {
       ogImage: c.hero,
       ogType: "article",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Case Studies", href: "https://exitprobateteam.com/pages/case-studies/index.html" },
-        { label: c.title.slice(0, 60), href: `https://exitprobateteam.com/pages/case-studies/${c.slug}.html` },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Case Studies", href: "https://oregonprobateagent.com/pages/case-studies/index.html" },
+        { label: c.title.slice(0, 60), href: `https://oregonprobateagent.com/pages/case-studies/${c.slug}.html` },
       ],
       jsonLd: {
         "@context": "https://schema.org",
@@ -170,8 +170,8 @@ function caseIndex() {
       title: "Case Studies — Real Oregon Probate Engagements",
       description: "Four anonymized Oregon probate engagements — from a Eugene bungalow cash close to a Multnomah conservatorship court-confirmed sale. Real timelines, real numbers, real outcomes.",
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Case Studies", href: "https://exitprobateteam.com/pages/case-studies/index.html" },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Case Studies", href: "https://oregonprobateagent.com/pages/case-studies/index.html" },
       ],
     },
     body: `

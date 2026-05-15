@@ -1,5 +1,5 @@
 /* =====================================================================
-   EXIT PROBATE TEAM — GSAP scroll-reveal layer
+   OREGON PROBATE AGENT — GSAP scroll-reveal layer
    Hero animations are CSS-only (see styles.css keyframes).
    Requires GSAP + ScrollTrigger loaded from CDN.
    ===================================================================== */

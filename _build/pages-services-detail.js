@@ -26,9 +26,9 @@ function detail(svc, index) {
       description: `${svc.short} — ${svc.headline} A specialty service of Oregon's Certified Probate Real Estate Specialists.`,
       ogImage: HERO_IMG_BY_SLUG[svc.slug] || IMG.craftsman,
       breadcrumbs: [
-        { label: "Home", href: "https://exitprobateteam.com/" },
-        { label: "Services", href: "https://exitprobateteam.com/pages/services.html" },
-        { label: svc.title, href: `https://exitprobateteam.com/pages/services/${svc.slug}.html` },
+        { label: "Home", href: "https://oregonprobateagent.com/" },
+        { label: "Services", href: "https://oregonprobateagent.com/pages/services.html" },
+        { label: svc.title, href: `https://oregonprobateagent.com/pages/services/${svc.slug}.html` },
       ],
       jsonLd: {
         "@context": "https://schema.org",

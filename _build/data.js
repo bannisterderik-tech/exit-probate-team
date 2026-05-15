@@ -178,7 +178,6 @@ const TEAM = [
     role: "Co-Founder · Operations & Vendor Network",
     short: "Special Ops · Vendor Bench · Logistics",
     photo: "headshot-ed-zulyevic.webp",
-    photoMissing: true,
     bio: [
       "Ed Zulyevic runs the operational engine of The Operative Group — the vetted vendor bench, the field logistics, and the weekly executor digest that keeps eight moving pieces from becoming twenty.",
       "Before co-founding the team, Ed cut his teeth coordinating multi-trade rehabs and investor turnarounds across Oregon and California. He brought that same triage instinct to probate: assemble the right specialists, sequence them correctly, document everything, and ship the property across the finish line on time and on budget.",

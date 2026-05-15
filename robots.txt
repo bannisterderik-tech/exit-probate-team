@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://exitprobateteam.com/sitemap.xml
+Sitemap: https://oregonprobateagent.com/sitemap.xml

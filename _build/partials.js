@@ -4,14 +4,14 @@
 "use strict";
 
 const SITE = {
-  name: "Exit Probate Team",
-  full: "The Operative Group — Exit Probate Team",
+  name: "Oregon Probate Agent",
+  full: "Oregon Probate Agent by EugeneRealEstate.com",
   tagline: "Oregon Probate Real Estate Specialists",
-  url: "https://exitprobateteam.com",
+  url: "https://oregonprobateagent.com",
   phone: "(541) 525-3268",
   phoneHref: "tel:+15415253268",
-  email: "hello@exitprobateteam.com",
-  emailHref: "mailto:hello@exitprobateteam.com",
+  email: "hello@oregonprobateagent.com",
+  emailHref: "mailto:hello@oregonprobateagent.com",
   address: "Eugene, Oregon",
   serviceAreaLat: 44.0521,
   serviceAreaLng: -123.0868,
@@ -66,7 +66,7 @@ function head(meta, outPath) {
     "@type": ["LocalBusiness", "RealEstateAgent"],
     "@id": `${SITE.url}#business`,
     name: SITE.full,
-    alternateName: ["Exit Probate Team", "The Operative Group"],
+    alternateName: ["Oregon Probate Agent", "Eugene Probate Agent", "Eugene Real Estate", "The Operative Group"],
     url: SITE.url,
     telephone: SITE.phone,
     email: SITE.email,
@@ -167,14 +167,8 @@ function header(currentPath, outPath) {
   <div class="page-progress" aria-hidden="true"></div>
   <header class="site-header">
     <div class="wrap nav">
-      <a href="${homeHref}" class="brand" aria-label="Exit Probate Team home">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 19 L19 5 M9 5 L19 5 L19 15" stroke="#6DB23E" stroke-width="2.6" fill="none" stroke-linecap="square"/></svg>
-        </span>
-        <span class="brand-name">
-          <span class="name">Exit Probate Team</span>
-          <span class="sub">The Operative Group · Oregon</span>
-        </span>
+      <a href="${homeHref}" class="brand" aria-label="Oregon Probate Agent by EugeneRealEstate.com — home">
+        <img src="${r}assets/img/logo.png" alt="Eugene Real Estate · The Operative Group · Powered by REAL" class="brand-logo" width="360" height="100" />
       </a>
       <nav class="nav-links" aria-label="Primary">
         ${links
@@ -215,8 +209,8 @@ function footer(outPath) {
     <div class="wrap">
       <div class="grid">
         <div class="brand-block">
-          <div class="name">Exit Probate <em>Team</em></div>
-          <div class="sub">The Operative Group · Oregon</div>
+          <div class="name">Oregon Probate <em>Agent</em></div>
+          <div class="sub">by EugeneRealEstate.com · The Operative Group</div>
           <p>Oregon's Certified Probate Real Estate Specialists. Compassionate guidance, decisive execution, and a vetted network of attorneys, contractors and cash buyers — when one wrong move can cost the estate months.</p>
           <div class="mt-8" style="display:flex; gap:10px;">
             <a class="pill" href="${SITE.phoneHref}"><span class="dot"></span>${SITE.phone}</a>

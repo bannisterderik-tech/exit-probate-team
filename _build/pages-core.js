@@ -105,11 +105,11 @@ function home() {
       jsonLd: {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "Exit Probate Team",
-        url: "https://exitprobateteam.com",
+        name: "Oregon Probate Agent",
+        url: "https://oregonprobateagent.com",
         potentialAction: {
           "@type": "SearchAction",
-          target: "https://exitprobateteam.com/?q={search_term_string}",
+          target: "https://oregonprobateagent.com/?q={search_term_string}",
           "query-input": "required name=search_term_string",
         },
       },
@@ -183,10 +183,10 @@ const HOME_BODY = `
         <div class="hero-copy">
           <span class="eyebrow-line reveal">Oregon probate real estate · since 2019</span>
           <h1 class="reveal">
-            <span class="line-mask"><span>The family</span></span>
-            <span class="line-mask"><span><em class="serif-italic-accent">deserves</em> a</span></span>
-            <span class="line-mask"><span>quiet, capable</span></span>
-            <span class="line-mask"><span>exit.</span></span>
+            <span class="line-mask"><span>You <em class="serif-italic-accent">inherited</em></span></span>
+            <span class="line-mask"><span>a house.</span></span>
+            <span class="line-mask"><span>We'll carry the</span></span>
+            <span class="line-mask"><span>hard parts.</span></span>
           </h1>
           <p class="lede reveal">
             We are licensed Oregon real estate agents who specialize — only — in probate, trust, and conservatorship property. We carry the practical side of the home with the patience the family deserves, on the timeline the family chooses.
@@ -606,7 +606,7 @@ const HOME_BODY = `
           </div>
           <div class="item reveal">
             <div class="l">Email</div>
-            <div class="v"><a href="mailto:hello@exitprobateteam.com">hello@exitprobateteam.com</a></div>
+            <div class="v"><a href="mailto:hello@oregonprobateagent.com">hello@oregonprobateagent.com</a></div>
           </div>
           <div class="item reveal">
             <div class="l">Hours</div>

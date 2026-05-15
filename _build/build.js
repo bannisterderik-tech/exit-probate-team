@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* =====================================================================
-   build.js — Static site generator for Exit Probate Team
+   build.js — Static site generator for Oregon Probate Agent
    Run:  node _build/build.js
    Emits: all HTML files at the correct paths, plus sitemap.xml + robots.txt
    ===================================================================== */
@@ -100,7 +100,7 @@ writeFile("robots.txt", robots);
 const humans = `/* TEAM */
 The Operative Group
 Co-founders: Daniel Gandee · Edward Zulyevic
-Site: https://exitprobateteam.com
+Site: https://oregonprobateagent.com
 Location: Eugene, Oregon
 
 /* SITE */
