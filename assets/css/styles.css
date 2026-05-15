@@ -178,13 +178,16 @@ section.flush   { padding: 0; }
 .brand { display: flex; align-items: center; gap: 14px; }
 .brand-logo {
   display: block;
-  height: 44px;
+  height: 72px;
   width: auto;
-  max-width: min(420px, 60vw);
+  max-width: min(560px, 64vw);
   object-fit: contain;
+  transition: height 320ms var(--ease-out);
 }
+.site-header.scrolled .brand-logo { height: 56px; }
 @media (max-width: 720px) {
-  .brand-logo { height: 36px; max-width: 56vw; }
+  .brand-logo { height: 52px; max-width: 62vw; }
+  .site-header.scrolled .brand-logo { height: 44px; }
 }
 
 .nav-links { display: flex; align-items: center; gap: 2px; }
